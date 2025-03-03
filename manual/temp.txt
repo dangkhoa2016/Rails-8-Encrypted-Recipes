@@ -37,23 +37,53 @@ VISUAL="code --wait" RAILS_ENV="production" bin/rails credentials:edit
 -----
 
 
+
+bin/rails db:encryption:init
+
+```
+Add this entry to the credentials of the target environment: 
+
+active_record_encryption:
+  primary_key: TyuisHleUNBSnvGqAwuDo0rcp8FOiT4Z
+  deterministic_key: JQ08gx0gpe7ryT5V6gV3pfweHCM2rMI0
+  key_derivation_salt: GZ8mKWYW7VRWB9TezyVaQqSDnYJGMyGe
+```
+
+-----
+
 config/credentials/development.key: 729449f34d8ab9404382401b2680a13b
 development: EDITOR="nano" rails credentials:edit  --environment=development
 secret_key_base: 78a1cd546189a58b7b8eccba523a3c43ca714425f8a16633749cb5171175bf0bae586ec8265c27e098e04105aef71cc9dc6362f579a81dd4bf97a0d3b5151b24
+active_record_encryption:
+  primary_key: cNQtSocbgN1GSpTxCACvGcjvygQqqDhz
+  deterministic_key: wveAZByrklt1USlBmJVAEn6bDIq0GI0g
+  key_derivation_salt: Rz3uwPr3ZDCGoMETZbcUvdHpGdkJPxet
 
 
 config/credentials/test.key: 052bf984e0b8f6f62aaad9ef20efc660
 test: EDITOR="nano" rails credentials:edit  --environment=test
 secret_key_base: e6a4322fb9a2a46b63f8f4cbe866dce9f0ecfc8709e589b7c61f97c1d7515b2765862c8a41c91c2525c210bb530130663791681f4a1cd307f0d568717ddc8b62
+active_record_encryption:
+  primary_key: rkW1tmhvplnmsies2Lij6coyqBSIAv7V
+  deterministic_key: l5yG29Ewzhu3wwAbIF76dhtg3hzdhAiT
+  key_derivation_salt: Bj2ygbpBQUD0z1d2fzTlsqSpur3NVG0o
 
 
 config/credentials/production.key: 3d53c0990c00975334aa7c30a1ca3fd7
 production: EDITOR="nano" rails credentials:edit  --environment=production
 secret_key_base: 5b7507c7137bf1c39e687399195e047f25fc1619d3a4c61e8f9bf8b9c3d199d7eb1792cfa924f32eebbed6a19f847d5c9e2196cda540e00e7cc0d665fddf82d4
+active_record_encryption:
+  primary_key: 0RQd7izssWecLSXU53sEkIO4QCHCGfoJ
+  deterministic_key: L0kfjSf3brWhEgQhy7mKm5NQZzQb3bBC
+  key_derivation_salt: 5ighc941ZgqNy2Ha5VBn25yJVdEfRmeQ
 
 
 RAILS_ENV="staging" bin/rails credentials:show, if not found then use config/credentials.yml.enc and config/master.key
 secret_key_base: ec7bfae3494a390fefb9cea23736556be559bff2eed27d649dc3edbd1da3f527760116d8bd15139c87560ccc10da84b0c780d4e24f9f381fce27425b241668d4
+active_record_encryption:
+  primary_key: TyuisHleUNBSnvGqAwuDo0rcp8FOiT4Z
+  deterministic_key: JQ08gx0gpe7ryT5V6gV3pfweHCM2rMI0
+  key_derivation_salt: GZ8mKWYW7VRWB9TezyVaQqSDnYJGMyGe
 
 
 -----

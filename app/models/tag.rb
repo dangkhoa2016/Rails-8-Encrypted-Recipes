@@ -7,7 +7,10 @@ class Tag < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 150 }
 
   enum :tag_type, {
-    recipe: 0,
-    ingredient: 1
+    recipe: '0',
+    ingredient: '1'
   }
+
+
+  encrypts :name, deterministic: true
 end
