@@ -1,0 +1,12 @@
+
+rails generate scaffold Category name:string summary:string --no-migration --force
+
+rails generate scaffold IngredientRecipe ingredient:references recipe:references amount:decimal unit:string --no-migration --force
+
+rails generate scaffold Ingredient name:string description:text --no-migration --force
+
+rails generate scaffold Recipe name:string summary:string cuisine_type:string is_vegetarian:boolean calories:integer prepare_duration:integer category:references --no-migration --force
+
+rails generate scaffold Step name:string step_number:integer description:text recipe:references --no-migration --force
+
+rails generate scaffold Tag name:string tag_type:integer --no-migration --force
