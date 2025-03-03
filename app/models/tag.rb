@@ -9,7 +9,10 @@ class Tag < ApplicationRecord
 
 
   enum :tag_type, {
-    recipe: 0,
-    ingredient: 1
+    recipe: "0",
+    ingredient: "1"
   }
+
+
+  encrypts :name, deterministic: true
 end

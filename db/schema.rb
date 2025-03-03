@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_03_222817) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_04_042546) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.string "summary"
@@ -19,9 +19,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_222817) do
   end
 
   create_table "ingredient_recipes", force: :cascade do |t|
-    t.integer "ingredient_id", null: false
-    t.integer "recipe_id", null: false
-    t.decimal "amount", precision: 10, scale: 2
+    t.string "ingredient_id", null: false
+    t.string "recipe_id", null: false
+    t.string "amount"
     t.string "unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -30,8 +30,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_222817) do
   end
 
   create_table "ingredient_tags", force: :cascade do |t|
-    t.integer "ingredient_id", null: false
-    t.integer "tag_id", null: false
+    t.string "ingredient_id", null: false
+    t.string "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id"], name: "index_ingredient_tags_on_ingredient_id"
@@ -46,8 +46,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_222817) do
   end
 
   create_table "recipe_tags", force: :cascade do |t|
-    t.integer "recipe_id", null: false
-    t.integer "tag_id", null: false
+    t.string "recipe_id", null: false
+    t.string "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipe_id"], name: "index_recipe_tags_on_recipe_id"
@@ -57,11 +57,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_222817) do
   create_table "recipes", force: :cascade do |t|
     t.string "name"
     t.string "summary"
-    t.integer "cuisine_type"
-    t.boolean "is_vegetarian"
-    t.integer "calories"
-    t.integer "prepare_duration"
-    t.integer "category_id", null: false
+    t.string "cuisine_type"
+    t.string "is_vegetarian"
+    t.string "calories"
+    t.string "prepare_duration"
+    t.string "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_recipes_on_category_id"
@@ -69,9 +69,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_222817) do
 
   create_table "steps", force: :cascade do |t|
     t.string "name"
-    t.integer "step_number"
+    t.string "step_number"
     t.text "description"
-    t.integer "recipe_id", null: false
+    t.string "recipe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipe_id"], name: "index_steps_on_recipe_id"
@@ -79,16 +79,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_03_222817) do
 
   create_table "tags", force: :cascade do |t|
     t.string "name"
-    t.integer "tag_type"
+    t.string "tag_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  add_foreign_key "ingredient_recipes", "ingredients"
-  add_foreign_key "ingredient_recipes", "recipes"
-  add_foreign_key "ingredient_tags", "ingredients"
-  add_foreign_key "ingredient_tags", "tags"
-  add_foreign_key "recipe_tags", "recipes"
-  add_foreign_key "recipe_tags", "tags"
-  add_foreign_key "steps", "recipes"
 end
