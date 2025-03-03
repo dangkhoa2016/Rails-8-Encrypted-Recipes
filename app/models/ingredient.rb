@@ -5,4 +5,8 @@ class Ingredient < ApplicationRecord
   has_many :tags, through: :ingredient_tags
 
   validates :name, presence: true, length: { minimum: 2, maximum: 150 }
+
+
+  encrypts :name, deterministic: true
+  encrypts :description
 end
