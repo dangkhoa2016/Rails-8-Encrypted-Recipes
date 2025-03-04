@@ -9,11 +9,16 @@ class StepTest < ActiveSupport::TestCase
     assert @step.valid?
   end
 
+  test "should require a description" do
+    @step.description = nil
+    assert_not @step.valid?
+  end
+
   test "should belong to recipe" do
     assert_respond_to @step, :recipe
   end
 
   test "should return the total records" do
-    assert_equal 2, Step.count
+    assert_equal 3, Step.count
   end
 end

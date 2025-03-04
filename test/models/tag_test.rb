@@ -9,12 +9,25 @@ class TagTest < ActiveSupport::TestCase
     assert @tag.valid?
   end
 
+  test "should require a name" do
+    @tag.name = nil
+    assert_not @tag.valid?
+  end
+
   test "should have many ingredient_tags" do
     assert_respond_to @tag, :ingredient_tags
   end
 
+  test "should have many ingredients through ingredient_tags" do
+    assert_respond_to @tag, :ingredients
+  end
+
   test "should have many recipe_tags" do
     assert_respond_to @tag, :recipe_tags
+  end
+
+  test "should have many recipes through recipe_tags" do
+    assert_respond_to @tag, :recipes
   end
 
   test "should return the total records" do

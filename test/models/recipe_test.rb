@@ -9,12 +9,21 @@ class RecipeTest < ActiveSupport::TestCase
     assert @recipe.valid?
   end
 
+  test "should require a name" do
+    @recipe.name = nil
+    assert_not @recipe.valid?
+  end
+
   test "should have many steps" do
     assert_respond_to @recipe, :steps
   end
 
   test "should have many ingredient_recipes" do
     assert_respond_to @recipe, :ingredient_recipes
+  end
+
+  test "should have many ingredients through ingredient_recipes" do
+    assert_respond_to @recipe, :ingredients
   end
 
   test "should belong to category" do

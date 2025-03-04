@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Category 1
   summary: MyString
+  id: 12345
 
 two:
-  name: MyString
+  name: Category 2
   summary: MyString
+  id: 12346

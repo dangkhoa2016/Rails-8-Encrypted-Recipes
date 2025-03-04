@@ -1,13 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Step 1
   step_number: 1
-  description: MyText
-  recipe: one
+  description: Step 1 description
+  recipe_id: 12354
 
 two:
-  name: MyString
+  name: Step 2
+  step_number: 2
+  description: Step 2 description
+  recipe_id: 12354
+
+three:
+  name: Step 1
   step_number: 1
-  description: MyText
-  recipe: two
+  description: Step 1 description
+  recipe_id: 12355

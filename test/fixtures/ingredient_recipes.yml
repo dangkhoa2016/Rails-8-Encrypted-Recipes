@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  ingredient: one
-  recipe: one
-  amount: 9.99
-  unit: MyString
+  ingredient_id: 12377
+  recipe_id: 12354
+  amount: 3
+  unit: "cup"
 
 two:
-  ingredient: two
-  recipe: two
+  ingredient_id: 12378
+  recipe_id: 12355
   amount: 9.99
-  unit: MyString
+  unit: "gram"
