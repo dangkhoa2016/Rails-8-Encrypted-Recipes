@@ -9,6 +9,11 @@ class CategoryTest < ActiveSupport::TestCase
     assert @category.valid?
   end
 
+  test "should require a name" do
+    @category.name = nil
+    assert_not @category.valid?
+  end
+
   test "should have many recipes" do
     assert_respond_to @category, :recipes
   end

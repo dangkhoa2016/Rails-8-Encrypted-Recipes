@@ -1,19 +1,20 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  summary: MyString
-  cuisine_type: MyString
-  is_vegetarian: false
+  name: Recipe 1
+  summary: Recipe 1 Summary
+  cuisine_type: :american
+  is_vegetarian: "false"
   calories: 1
   prepare_duration: 1
-  category: one
-
+  category_id: 12345
+  id: 12354
 two:
-  name: MyString
-  summary: MyString
-  cuisine_type: MyString
-  is_vegetarian: false
-  calories: 1
-  prepare_duration: 1
-  category: two
+  name: Recipe 2
+  summary: Recipe 2 Summary
+  cuisine_type: :italian
+  is_vegetarian: "true"
+  calories: 2
+  prepare_duration: 2
+  category_id: 12346
+  id: 12355

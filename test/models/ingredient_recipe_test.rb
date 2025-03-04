@@ -19,14 +19,14 @@ class IngredientRecipeTest < ActiveSupport::TestCase
     assert_not @ingredient_recipe.valid?
   end
 
-  test "should not require an amount" do
+  test "should require an amount" do
     @ingredient_recipe.amount = nil
-    assert_equal @ingredient_recipe.valid?, true
+    assert_not @ingredient_recipe.valid?
   end
 
-  test "should not require a unit" do
+  test "should require a unit" do
     @ingredient_recipe.unit = nil
-    assert_equal @ingredient_recipe.valid?, true
+    assert_not @ingredient_recipe.valid?
   end
 
   test "should belong to ingredient" do

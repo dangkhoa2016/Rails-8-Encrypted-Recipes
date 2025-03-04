@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  recipe: one
-  tag: one
+  recipe_id: 12354
+  tag_id: 12368
 
 two:
-  recipe: two
-  tag: two
+  recipe_id: 12355
+  tag_id: 12369
