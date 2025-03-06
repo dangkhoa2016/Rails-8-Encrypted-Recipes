@@ -2,14 +2,17 @@
 
 <% content_for :title, "Categories" %>
 
-<h1>Categories</h1>
+<div class='mb-5'>
+  <div class='d-flex justify-content-between align-items-center'>
+    <h1>Categories</h1>
+    <%= link_to "New category", new_category_path, class: 'btn btn-primary' %>
+  </div>
+  <div class='clearfix'></div>
+</div>
 
-<div id="categories">
+<div id="categories" class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 mb-3 gx-3 gy-5 justify-content-center'>
   <% @categories.each do |category| %>
     <%= render category %>
-    <p>
-      <%= link_to "Show this category", category %>
-    </p>
   <% end %>
 </div>
 
