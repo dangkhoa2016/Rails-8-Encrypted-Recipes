@@ -3,7 +3,11 @@ class CategoriesController < ApplicationController
 
   # GET /categories or /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.all.to_a.sort_by(&:name)
+    count_recipes_by_ids = Category.count_recipes_by_ids(@categories.map(&:id))
+    @categories.each do |category|
+      category.recipes_count = count_recipes_by_ids[category.id]
+    end
   end
 
   # GET /categories/1 or /categories/1.json
