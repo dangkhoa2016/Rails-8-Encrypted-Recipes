@@ -9,6 +9,14 @@ class Category < ApplicationRecord
   encrypts :summary
 
 
+  attr_accessor :recipes_count
+
+
+  def display_recipes_count
+    recipes_count || recipes.count
+  end
+
+
   class << self
     def count_records_by_ids(ids, model)
       model = model.model_name.singular if model.is_a? Class
