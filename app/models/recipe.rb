@@ -6,8 +6,8 @@ class Recipe < ApplicationRecord
   has_many :ingredient_recipes, dependent: :destroy
   has_many :recipe_tags, dependent: :destroy
   has_many :steps, dependent: :destroy
-  has_many :ingredients, through: :ingredient_recipes
-  has_many :tags, through: :recipe_tags
+  # has_many :ingredients, through: :ingredient_recipes
+  # has_many :tags, through: :recipe_tags
 
 
   validates :name, presence: true, length: { minimum: 2, maximum: 150 }
@@ -62,5 +62,42 @@ class Recipe < ApplicationRecord
 
   def prepare_duration=(value)
     super value&.to_i
+  end
+
+  def ingredients
+    Ingredient.where(id: ingredient_recipes.pluck(:ingredient_id))
+  end
+
+  def tags
+    Tag.where(id: recipe_tags.pluck(:tag_id))
+  end
+
+
+  class << self
+    def count_records_by_ids(ids, model)
+      model = model.model_name.singular if model.is_a? Class
+      result = case model.to_s.downcase
+      when "ingredient"
+        IngredientRecipe.where(recipe_id: ids).group(:recipe_id).count("id")
+      when "tag"
+        RecipeTag.where(recipe_id: ids).group(:recipe_id).count("id")
+      when "step"
+        Step.where(recipe_id: ids).group(:recipe_id).count("id")
+      end
+
+      ids.map { |id| [ id, result[id.to_s].to_i ] }.to_h
+    end
+
+    def count_tags_by_ids(ids)
+      count_records_by_ids(ids, Tag.name)
+    end
+
+    def count_ingredients_by_ids(ids)
+      count_records_by_ids(ids, Ingredient.name)
+    end
+
+    def count_steps_by_ids(ids)
+      count_records_by_ids(ids, Step.name)
+    end
   end
 end
