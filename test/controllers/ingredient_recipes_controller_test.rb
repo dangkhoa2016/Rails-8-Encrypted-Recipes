@@ -17,7 +17,13 @@ class IngredientRecipesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ingredient_recipe" do
     assert_difference("IngredientRecipe.count") do
-      post ingredient_recipes_url, params: { ingredient_recipe: { amount: @ingredient_recipe.amount, ingredient_id: @ingredient_recipe.ingredient_id, recipe_id: @ingredient_recipe.recipe_id, unit: @ingredient_recipe.unit } }
+      ingredient_recipe_params = {
+        amount: @ingredient_recipe.amount,
+        ingredient_id: @ingredient_recipe.ingredient_id,
+        recipe_id: Recipe.last.id,
+        unit: @ingredient_recipe.unit
+      }
+      post ingredient_recipes_url, params: { ingredient_recipe: ingredient_recipe_params }
     end
 
     assert_redirected_to ingredient_recipe_url(IngredientRecipe.last)
@@ -34,7 +40,13 @@ class IngredientRecipesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update ingredient_recipe" do
-    patch ingredient_recipe_url(@ingredient_recipe), params: { ingredient_recipe: { amount: @ingredient_recipe.amount, ingredient_id: @ingredient_recipe.ingredient_id, recipe_id: @ingredient_recipe.recipe_id, unit: @ingredient_recipe.unit } }
+    ingredient_recipe_params = {
+        amount: @ingredient_recipe.amount,
+        ingredient_id: @ingredient_recipe.ingredient_id,
+        recipe_id: Recipe.last.id,
+        unit: @ingredient_recipe.unit
+      }
+    patch ingredient_recipe_url(@ingredient_recipe), params: { ingredient_recipe: ingredient_recipe_params }
     assert_redirected_to ingredient_recipe_url(@ingredient_recipe)
   end
 
