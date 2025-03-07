@@ -1,37 +1,101 @@
-<div id="<%= dom_id recipe %>">
-  <p>
-    <strong>Name:</strong>
-    <%= recipe.name %>
-  </p>
+<%
+if action_name == 'show'
+  steps = recipe.steps.sort_by(&:step_number)
+  display_steps_count = steps.count
+  ingredient_recipes = recipe.ingredient_recipes.to_a
+  ingredients = Ingredient.where(id: ingredient_recipes.map(&:ingredient_id))
+  ingredient_recipes.each do |ingredient_recipe|
+    ingredient_recipe.virtual_ingredient = (ingredients.find { |i| i.id == ingredient_recipe.ingredient_id }) || Ingredient.new
+  end
+  ingredient_recipes.sort_by! { |ir| ir.virtual_ingredient.name || '' }
+else
+  display_steps_count = recipe.display_steps_count
+  display_ingredients_count = recipe.display_ingredients_count
+end
+border_color = case display_steps_count
+               when 0
+                 'border-secondary'
+               when 1..2
+                 'border-info'
+               when 3..4
+                 'border-success'
+               else
+                 'border-warning'
+               end
+%>
+<div id="<%= dom_id recipe %>" class='col'>
+  <div class='card border-top-sm <%= border_color %>'>
+    <div class='card-header py-2'>
+      <%= link_to recipe.name, recipe, class: 'text-decoration-none fs-5' %>
+    </div>
 
-  <p>
-    <strong>Summary:</strong>
-    <%= recipe.summary %>
-  </p>
+    <div class='card-body'>
+      <div class='card-text mb-3'>
+        <% if recipe.summary.blank? %>
+          <div class='d-flex align-items-center'>
+            <i class='bi bi-emoji-frown me-1'></i><i>No summary yet</i>
+          </div>
+        <% else %>
+          <%= recipe.summary %>
+        <% end %>
+      </div>
 
-  <p>
-    <strong>Cuisine type:</strong>
-    <%= recipe.cuisine_type %>
-  </p>
+      <p class='card-text'>
+        <strong>Cuisine type: </strong><%= recipe.cuisine_type&.titleize %></p>
+      </p>
 
-  <p>
-    <strong>Is vegetarian:</strong>
-    <%= recipe.is_vegetarian %>
-  </p>
+      <% if request.query_parameters[:category].blank? %>
+      <p class='card-text'>
+        <strong>Category: </strong>
+        <% if recipe.category.present? %>
+          <%= link_to recipe.category.name, category_path(recipe.category), class: 'text-decoration-none' %>
+        <% else %>
+          <span class='text-muted'>None</span>
+        <% end %>
+      </p>
+      <% end %>
 
-  <p>
-    <strong>Calories:</strong>
-    <%= recipe.calories %>
-  </p>
+      <% if action_name == 'index' %>
+        <p class='card-text'>
+          <%= link_to ingredients_path(recipe: recipe.id), class: '' do %>
+            <strong>Number of ingredients:</strong>
+            <%= display_ingredients_count %>
+          <% end %>
+        </p>
+        <p class='card-text'>
+          <%= link_to steps_path(recipe: recipe.id), class: '' do %>
+            <strong>Number of steps:</strong>
+            <%= display_steps_count %>
+          <% end %>
+        </p>
+      <% end %>
 
-  <p>
-    <strong>Prepare duration:</strong>
-    <%= recipe.prepare_duration %>
-  </p>
+      <p class='card-text'>
+        <strong>Vegetarian: </strong><%= recipe.is_vegetarian.to_yes_no %>
+      </p>
+      <p class='card-text'>
+        <strong>Calories: </strong><%= recipe.calories %>
+      </p>
+      <p class='card-text'>
+        <strong>Preparation duration: </strong><%= recipe.prepare_duration&.to_duration %>
+      </p>
 
-  <p>
-    <strong>Category:</strong>
-    <%= recipe.category_id %>
-  </p>
+      <% if action_name == 'show' %>
+        <%= render 'recipes/recipe_steps', steps: steps %>
+        <hr class="my-1" />
+        <%= render 'recipes/recipe_ingredients', ingredient_recipes: ingredient_recipes %>
+      <% end %>
+    </div>
 
+    <div class='card-footer text-body-secondary'>
+      <small>Created <%= time_ago_in_words(recipe.created_at) %> ago</small>
+      <hr class="my-1" />
+      <small>Updated <%= time_ago_in_words(recipe.updated_at) %> ago</small>
+    </div>
+    <div class='d-flex card-footer justify-content-between'>
+      <%= link_to 'Show', recipe, class: 'btn btn-sm btn-primary' %>
+      <%= link_to 'Edit', edit_recipe_path(recipe), class: 'btn btn-sm btn-secondary' %>
+      <%= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+    </div>
+  </div>
 </div>
