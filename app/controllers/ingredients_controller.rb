@@ -1,5 +1,6 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: %i[ show edit update destroy ]
+  include TagUpdater
 
   # GET /ingredients or /ingredients.json
   def index
@@ -36,6 +37,7 @@ class IngredientsController < ApplicationController
 
     respond_to do |format|
       if @ingredient.save
+        update_tags(@ingredient, IngredientTag)
         format.html { redirect_to @ingredient, notice: "Ingredient was successfully created." }
         format.json { render :show, status: :created, location: @ingredient }
       else
@@ -49,6 +51,7 @@ class IngredientsController < ApplicationController
   def update
     respond_to do |format|
       if @ingredient.update(ingredient_params)
+        update_tags(@ingredient, IngredientTag)
         format.html { redirect_to @ingredient, notice: "Ingredient was successfully updated." }
         format.json { render :show, status: :ok, location: @ingredient }
       else

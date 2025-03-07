@@ -17,10 +17,21 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create recipe" do
     assert_difference("Recipe.count") do
-      post recipes_url, params: { recipe: { calories: @recipe.calories, category_id: @recipe.category_id, cuisine_type: @recipe.cuisine_type, is_vegetarian: @recipe.is_vegetarian, name: @recipe.name, prepare_duration: @recipe.prepare_duration, summary: @recipe.summary } }
-    end
+      recipe_params = {
+        calories: @recipe.calories,
+        category_id: @recipe.category_id,
+        cuisine_type: @recipe.cuisine_type,
+        is_vegetarian: @recipe.is_vegetarian,
+        name: @recipe.name,
+        prepare_duration: @recipe.prepare_duration,
+        summary: @recipe.summary
+      }
 
-    assert_redirected_to recipe_url(Recipe.last)
+      post recipes_url, params: { recipe: recipe_params, tag_ids: Tag.first(2).pluck(:id) }
+    end
+    recipe = controller.instance_variable_get(:@recipe)
+    assert_equal recipe.tags.count, 2
+    assert_redirected_to recipe_url(recipe)
   end
 
   test "should show recipe" do
@@ -34,7 +45,16 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update recipe" do
-    patch recipe_url(@recipe), params: { recipe: { calories: @recipe.calories, category_id: @recipe.category_id, cuisine_type: @recipe.cuisine_type, is_vegetarian: @recipe.is_vegetarian, name: @recipe.name, prepare_duration: @recipe.prepare_duration, summary: @recipe.summary } }
+    recipe_params = {
+      calories: @recipe.calories,
+      category_id: @recipe.category_id,
+      cuisine_type: @recipe.cuisine_type,
+      is_vegetarian: @recipe.is_vegetarian,
+      name: @recipe.name,
+      prepare_duration: @recipe.prepare_duration,
+      summary: @recipe.summary,
+    }
+    patch recipe_url(@recipe), params: { recipe: recipe_params, tag_ids: Tag.first(2).pluck(:id) }
     assert_redirected_to recipe_url(@recipe)
   end
 

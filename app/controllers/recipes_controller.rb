@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
+  include TagUpdater
 
   # GET /recipes or /recipes.json
   def index
@@ -40,6 +41,7 @@ class RecipesController < ApplicationController
 
     respond_to do |format|
       if @recipe.save
+        update_tags(@recipe, RecipeTag)
         format.html { redirect_to @recipe, notice: "Recipe was successfully created." }
         format.json { render :show, status: :created, location: @recipe }
       else
@@ -53,6 +55,7 @@ class RecipesController < ApplicationController
   def update
     respond_to do |format|
       if @recipe.update(recipe_params)
+        update_tags(@recipe, RecipeTag)
         format.html { redirect_to @recipe, notice: "Recipe was successfully updated." }
         format.json { render :show, status: :ok, location: @recipe }
       else
@@ -80,6 +83,7 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.expect(recipe: [ :name, :summary, :cuisine_type, :is_vegetarian, :calories, :prepare_duration, :category_id ])
+      params.expect(recipe: [ :name, :summary, :cuisine_type, :is_vegetarian,
+        :calories, :prepare_duration, :category_id ])
     end
 end

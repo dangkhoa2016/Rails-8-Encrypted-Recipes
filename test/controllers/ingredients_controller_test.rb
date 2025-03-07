@@ -34,7 +34,12 @@ class IngredientsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update ingredient" do
-    patch ingredient_url(@ingredient), params: { ingredient: { description: @ingredient.description, name: @ingredient.name } }
+    ingredient_params = {
+      description: @ingredient.description,
+      name: @ingredient.name,
+      tag_ids: Tag.first(2).pluck(:id)
+    }
+    patch ingredient_url(@ingredient), params: { ingredient: ingredient_params }
     assert_redirected_to ingredient_url(@ingredient)
   end
 

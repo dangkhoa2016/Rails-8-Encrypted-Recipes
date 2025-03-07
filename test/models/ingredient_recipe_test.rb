@@ -37,9 +37,9 @@ class IngredientRecipeTest < ActiveSupport::TestCase
     assert_respond_to @ingredient_recipe, :recipe
   end
 
-  test "should not check unique ingredient and recipe combination" do
+  test "should check unique ingredient and recipe combination" do
     duplicate_ingredient_recipe = @ingredient_recipe.dup
-    assert_equal duplicate_ingredient_recipe.valid?, true
+    assert_equal duplicate_ingredient_recipe.valid?, false
   end
 
   test "should return the total records" do
