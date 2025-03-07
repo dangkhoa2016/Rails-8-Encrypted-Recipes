@@ -1,9 +1,8 @@
-<%= form_with(model: step) do |form| %>
+<%= form_with(model: step, class: 'mt-4') do |form| %>
   <% if step.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h5>
+      <ul class='mb-0'>
         <% step.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,27 +10,33 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control#{" is-invalid" if step.errors[:name].any?}" %>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :step_number, class: "form-label" %>
+        <%= form.number_field :step_number, class: "form-control#{" is-invalid" if step.errors[:step_number].any?}" %>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :step_number, style: "display: block" %>
-    <%= form.number_field :step_number %>
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control#{" is-invalid" if step.errors[:description].any?}" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
+  <div class="mb-3">
+    <%= form.label :recipe_id, class: "form-label" %>
+    <%= form.collection_select :recipe_id, Recipe.all, :id, :name, { prompt: "Select a recipe" },
+      class: "form-select#{" is-invalid" if step.errors[:recipe].any?}" %>
   </div>
 
-  <div>
-    <%= form.label :recipe_id, style: "display: block" %>
-    <%= form.text_field :recipe_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="mt-5 mb-3">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
