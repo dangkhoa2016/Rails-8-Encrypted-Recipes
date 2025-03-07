@@ -3,7 +3,19 @@ class RecipesController < ApplicationController
 
   # GET /recipes or /recipes.json
   def index
-    @recipes = Recipe.all
+    category_id = params[:category]
+    query = Recipe.includes(:category)
+    if category_id.present?
+      query = query.where(category_id: category_id)
+    end
+
+    @recipes = query.to_a.sort_by(&:name)
+    count_steps_by_ids = Recipe.count_steps_by_ids(@recipes.map(&:id))
+    count_ingredients_by_ids = Recipe.count_ingredients_by_ids(@recipes.map(&:id))
+    @recipes.each do |recipe|
+      recipe.steps_count = count_steps_by_ids[recipe.id]
+      recipe.ingredients_count = count_ingredients_by_ids[recipe.id]
+    end
   end
 
   # GET /recipes/1 or /recipes/1.json

@@ -36,6 +36,21 @@ class Recipe < ApplicationRecord
   encrypts :summary
 
 
+  attr_accessor :steps_count, :ingredients_count, :tags_count
+
+
+  def display_steps_count
+    steps_count || steps.count
+  end
+
+  def display_ingredients_count
+    ingredients_count || ingredients.count
+  end
+
+  def display_tags_count
+    tags_count || tags.count
+  end
+
   def is_vegetarian
     value = super
     value == "t" || value == "true"

@@ -14,11 +14,22 @@ class IngredientRecipe < ApplicationRecord
   encrypts :unit
 
 
+  attr_accessor :virtual_ingredient
+
+
+  def display_ingredient
+    virtual_ingredient || ingredient
+  end
+
   def amount
     super&.to_f
   end
 
   def amount=(value)
     super(value&.to_s)
+  end
+
+  def display_amount
+    (amount&.to_i == amount ? amount.to_i : amount).to_s
   end
 end
