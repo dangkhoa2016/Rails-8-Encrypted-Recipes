@@ -1,9 +1,8 @@
-<%= form_with(model: recipe) do |form| %>
+<%= form_with(model: recipe, class: 'mt-4') do |form| %>
   <% if recipe.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h5>
+      <ul class='mb-0'>
         <% recipe.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,42 +10,73 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control#{" is-invalid" if recipe.errors[:name].any?}" %>
   </div>
 
-  <div>
-    <%= form.label :summary, style: "display: block" %>
-    <%= form.text_field :summary %>
+  <div class="mb-3">
+    <%= form.label :summary, class: "form-label" %>
+    <%= form.text_area :summary, class: "form-control#{" is-invalid" if recipe.errors[:summary].any?}" %>
   </div>
 
-  <div>
-    <%= form.label :cuisine_type, style: "display: block" %>
-    <%= form.text_field :cuisine_type %>
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :cuisine_type, class: "form-label" %>
+        <%= form.select :cuisine_type, cuisine_type_options, {}, class: "form-select" %>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <div class="mb-3 form-check">
+        <label class='form-label d-none d-md-block'>&nbsp;</label>
+        <div>
+          <%= form.check_box :is_vegetarian, { class: "form-check-input" }, 'true', 'false' %>
+          <%= form.label :is_vegetarian, 'For Vegetarian Users', class: "form-check-label" %>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :is_vegetarian, style: "display: block" %>
-    <%= form.checkbox :is_vegetarian %>
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :calories, class: "form-label" %>
+        <%= form.number_field :calories, class: "form-control" %>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :prepare_duration, class: "form-label" %>
+        <%= form.number_field :prepare_duration, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :calories, style: "display: block" %>
-    <%= form.number_field :calories %>
+  <div class="mb-3">
+    <%= form.label :category_id, class: "form-label" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name,
+      { prompt: "Select a category" }, class: "form-select#{" is-invalid" if recipe.errors[:category].any?}" %>
   </div>
 
-  <div>
-    <%= form.label :prepare_duration, style: "display: block" %>
-    <%= form.number_field :prepare_duration %>
+  <div class='alert alert-info'>
+    <h5>Add or Remove Tags</h5>
+    
+    <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 my-3 g-3'>
+      <% tag_ids = params.dig('tag_ids')&.map(&:to_i) || recipe.tags.pluck(:id) %>
+      <% Tag.recipe.each do |tag| %>
+        <div class='col'>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox"<%= " checked" if tag_ids.include?(tag.id) %>
+              role="switch" id="flexSwitchCheck<%= tag.id %>" name="tag_ids[]" value="<%= tag.id %>">
+            <label class="form-check-label" role='button' for="flexSwitchCheck<%= tag.id %>"><%= tag.name %></label>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :category_id, style: "display: block" %>
-    <%= form.text_field :category_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="mt-5 mb-3">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

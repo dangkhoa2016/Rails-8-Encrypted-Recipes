@@ -27,9 +27,9 @@ class RecipeTagTest < ActiveSupport::TestCase
     assert_respond_to @recipe_tag, :tag
   end
 
-  test "should not check unique recipe and tag combination" do
+  test "should check unique recipe and tag combination" do
     duplicate_recipe_tag = @recipe_tag.dup
-    assert_equal duplicate_recipe_tag.valid?, true
+    assert_not duplicate_recipe_tag.valid?
   end
 
   test "should return the total records" do

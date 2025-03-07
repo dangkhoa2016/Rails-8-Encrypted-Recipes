@@ -27,9 +27,9 @@ class IngredientTagTest < ActiveSupport::TestCase
     assert_respond_to @ingredient_tag, :tag
   end
 
-  test "should not check unique ingredient and tag combination" do
+  test "should check unique ingredient and tag combination" do
     duplicate_ingredient_tag = @ingredient_tag.dup
-    assert_equal duplicate_ingredient_tag.valid?, true
+    assert_not duplicate_ingredient_tag.valid?
   end
 
   test "should return the total records" do
