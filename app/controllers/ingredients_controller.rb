@@ -36,6 +36,7 @@ class IngredientsController < ApplicationController
 
     respond_to do |format|
       if @ingredient.save
+        update_tags
         format.html { redirect_to @ingredient, notice: "Ingredient was successfully created." }
         format.json { render :show, status: :created, location: @ingredient }
       else
@@ -49,6 +50,7 @@ class IngredientsController < ApplicationController
   def update
     respond_to do |format|
       if @ingredient.update(ingredient_params)
+        update_tags
         format.html { redirect_to @ingredient, notice: "Ingredient was successfully updated." }
         format.json { render :show, status: :ok, location: @ingredient }
       else
@@ -77,5 +79,26 @@ class IngredientsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def ingredient_params
       params.expect(ingredient: [ :name, :description ])
+    end
+
+    def update_tags
+      old_tags = @ingredient.tags.pluck(:id)
+      new_tags = params[:tag_ids].map(&:to_i)
+      ingredient_tags = IngredientTag.where(ingredient_id: @ingredient.id)
+      if new_tags.size >= old_tags.size
+        new_tags.each_with_index do |tag_id, index|
+          if index < old_tags.size
+            ingredient_tags[index].update(tag_id: tag_id)
+          else
+            IngredientTag.create(ingredient_id: @ingredient.id, tag_id: tag_id)
+          end
+        end
+      else
+        remove_tag_count = old_tags.size - new_tags.size
+        ingredient_tags.last(remove_tag_count).each(&:destroy)
+        ingredient_tags.each_with_index do |ingredient_tag, index|
+          ingredient_tag.update(tag_id: new_tags[index])
+        end
+      end
     end
 end

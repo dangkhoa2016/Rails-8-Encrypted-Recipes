@@ -40,6 +40,7 @@ class RecipesController < ApplicationController
 
     respond_to do |format|
       if @recipe.save
+        update_tags
         format.html { redirect_to @recipe, notice: "Recipe was successfully created." }
         format.json { render :show, status: :created, location: @recipe }
       else
@@ -53,6 +54,7 @@ class RecipesController < ApplicationController
   def update
     respond_to do |format|
       if @recipe.update(recipe_params)
+        update_tags
         format.html { redirect_to @recipe, notice: "Recipe was successfully updated." }
         format.json { render :show, status: :ok, location: @recipe }
       else
@@ -80,6 +82,28 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.expect(recipe: [ :name, :summary, :cuisine_type, :is_vegetarian, :calories, :prepare_duration, :category_id ])
+      params.expect(recipe: [ :name, :summary, :cuisine_type, :is_vegetarian,
+        :calories, :prepare_duration, :category_id ])
+    end
+
+    def update_tags
+      old_tags = @recipe.tags.pluck(:id)
+      new_tags = params[:tag_ids].map(&:to_i)
+      recipe_tags = RecipeTag.where(recipe_id: @recipe.id)
+      if new_tags.size >= old_tags.size
+        new_tags.each_with_index do |tag_id, index|
+          if index < old_tags.size
+            recipe_tags[index].update(tag_id: tag_id)
+          else
+            RecipeTag.create(recipe_id: @recipe.id, tag_id: tag_id)
+          end
+        end
+      else
+        remove_tag_count = old_tags.size - new_tags.size
+        recipe_tags.last(remove_tag_count).each(&:destroy)
+        recipe_tags.each_with_index do |recipe_tag, index|
+          recipe_tag.update(tag_id: new_tags[index])
+        end
+      end
     end
 end

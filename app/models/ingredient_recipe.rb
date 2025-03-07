@@ -6,6 +6,7 @@ class IngredientRecipe < ApplicationRecord
 
   validates :amount, numericality: { greater_than: 0 }
   validates :unit, presence: true
+  validates :ingredient_id, uniqueness: { scope: :recipe_id }
 
 
   encrypts :ingredient_id, deterministic: true

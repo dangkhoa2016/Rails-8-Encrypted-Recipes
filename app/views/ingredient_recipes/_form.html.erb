@@ -1,9 +1,8 @@
-<%= form_with(model: ingredient_recipe) do |form| %>
+<%= form_with(model: ingredient_recipe, class: 'mt-4') do |form| %>
   <% if ingredient_recipe.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(ingredient_recipe.errors.count, "error") %> prohibited this ingredient_recipe from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(ingredient_recipe.errors.count, "error") %> prohibited this ingredient recipe from being saved:</h5>
+      <ul class='mb-0'>
         <% ingredient_recipe.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,27 +10,41 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :ingredient_id, style: "display: block" %>
-    <%= form.text_field :ingredient_id %>
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :recipe_id, class: "form-label" %>
+        <%= form.collection_select :recipe_id, Recipe.all, :id, :name,
+          { prompt: "Select a recipe" }, class: "form-select#{" is-invalid" if ingredient_recipe.errors[:recipe].any?}" %>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <% error_ingredient = ingredient_recipe.errors[:ingredient].any? || ingredient_recipe.errors[:ingredient_id].any? %>
+        <%= form.label :ingredient_id, class: "form-label" %>
+        <%= form.collection_select :ingredient_id, Ingredient.all, :id, :name,
+          { prompt: "Select an ingredient" }, class: "form-select#{" is-invalid" if error_ingredient}" %>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :recipe_id, style: "display: block" %>
-    <%= form.text_field :recipe_id %>
+  <div class='row'>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :amount, class: "form-label" %>
+        <%= form.number_field :amount, step: 0.1,
+          class: "form-control#{" is-invalid" if ingredient_recipe.errors[:amount].any?}" %>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <div class="mb-3">
+        <%= form.label :unit, class: "form-label" %>
+        <%= form.text_field :unit, class: "form-control#{" is-invalid" if ingredient_recipe.errors[:unit].any?}" %>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :amount, style: "display: block" %>
-    <%= form.text_field :amount %>
-  </div>
-
-  <div>
-    <%= form.label :unit, style: "display: block" %>
-    <%= form.text_field :unit %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="mt-5 mb-3">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
