@@ -3,7 +3,7 @@ class StepsController < ApplicationController
 
   # GET /steps or /steps.json
   def index
-    @steps = Step.all
+    @recipes = Recipe.includes(:steps).sort_by(&:name)
   end
 
   # GET /steps/1 or /steps/1.json
@@ -12,7 +12,10 @@ class StepsController < ApplicationController
 
   # GET /steps/new
   def new
-    @step = Step.new
+    @step = Step.new(step_number: 1)
+    if params[:recipe_id].present?
+      @step.recipe_id = params[:recipe_id]
+    end
   end
 
   # GET /steps/1/edit

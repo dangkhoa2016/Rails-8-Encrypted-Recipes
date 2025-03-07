@@ -1,0 +1,22 @@
+<div id="<%= dom_id recipe %>" class='col'>
+  <div class="card <%= recipe.steps.any? ? 'border-success' : 'border-warning' %>">
+    <div class="card-header">
+      <%= link_to recipe.name, recipe, class: 'text-primary-emphasis fw-bold' %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= recipe.summary %></p>
+    </div>
+    <% if recipe.steps.any? %>
+      <div class="list-group list-group-flush">
+        <% recipe.steps.sort_by(&:step_number).each do |step| %>
+          <%= render step %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card-footer">
+        <p class="card-text">No steps yet</p>
+        <p class='mb-0'><%= link_to "Add a step", new_step_path(recipe_id: recipe.id) %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
