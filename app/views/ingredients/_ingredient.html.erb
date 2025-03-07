@@ -1,12 +1,42 @@
-<div id="<%= dom_id ingredient %>">
-  <p>
-    <strong>Name:</strong>
-    <%= ingredient.name %>
-  </p>
 
-  <p>
-    <strong>Description:</strong>
-    <%= ingredient.description %>
-  </p>
-
+<div id="<%= dom_id ingredient %>" class='col'>
+  <div class='card border-top-sm'>
+    <div class='card-header py-2'>
+      <%= link_to ingredient.name, ingredient, class: 'text-decoration-none fs-5' %>
+    </div>
+    <div class='card-body'>
+      <p class='card-text'><%= ingredient.description %></p>
+      <div class='clearfix'></div>
+      <% if ingredient.recipes_list.any? %>
+        <p class='card-text'>
+          <strong>Used in recipes:</strong>
+          <% ingredient.recipes_list.each do |recipe| %>
+            <span class='badge bg-secondary'>
+              <%= link_to recipe.name, recipe, class: 'text-decoration-none text-white' %>
+            </span>
+          <% end %>
+        </p>
+      <% end %>
+      <% if ingredient.tags_list.any? %>
+        <p class='card-text'>
+          <strong>Tags:</strong>
+          <% ingredient.tags_list.each do |tag| %>
+            <span class='badge bg-info'>
+              <%= link_to tag.name, tag, class: 'text-decoration-none text-white' %>
+            </span>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+    <div class='card-footer text-body-secondary'>
+      <small>Created <%= time_ago_in_words(ingredient.created_at) %> ago</small>
+      <hr class="my-1" />
+      <small>Updated <%= time_ago_in_words(ingredient.updated_at) %> ago</small>
+    </div>
+    <div class='d-flex card-footer justify-content-between'>
+      <%= link_to 'Show', ingredient, class: 'btn btn-sm btn-primary' %>
+      <%= link_to 'Edit', edit_ingredient_path(ingredient), class: 'btn btn-sm btn-secondary' %>
+      <%= link_to 'Destroy', ingredient, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+    </div>
+  </div>
 </div>

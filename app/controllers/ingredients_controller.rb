@@ -3,7 +3,18 @@ class IngredientsController < ApplicationController
 
   # GET /ingredients or /ingredients.json
   def index
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient.all.to_a.sort_by(&:name)
+    ids = @ingredients.pluck(:id)
+    ingredient_recipes = IngredientRecipe.where(ingredient_id: ids).to_a
+    recipes = Recipe.where(id: ingredient_recipes.pluck(:recipe_id).uniq).to_a
+    ingredient_tags = IngredientTag.where(ingredient_id: ids).to_a
+    tags = Tag.where(id: ingredient_tags.pluck(:tag_id).uniq).to_a
+    @ingredients.each do |ingredient|
+      relation = ingredient_recipes.select { |ir| ir.ingredient_id == ingredient.id }
+      ingredient.virtual_recipes = recipes.select { |r| relation.any? { |ir| ir.recipe_id == r.id } }.sort_by(&:name)
+      relation = ingredient_tags.select { |it| it.ingredient_id == ingredient.id }
+      ingredient.virtual_tags = tags.select { |t| relation.any? { |it| it.tag_id == t.id } }.sort_by(&:name)
+    end
   end
 
   # GET /ingredients/1 or /ingredients/1.json

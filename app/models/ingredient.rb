@@ -11,6 +11,17 @@ class Ingredient < ApplicationRecord
   encrypts :description
 
 
+  attr_accessor :virtual_recipes, :virtual_tags
+  
+
+  def recipes_list
+    virtual_recipes || recipes
+  end
+
+  def tags_list
+    virtual_tags || tags
+  end
+
   def recipes
     Recipe.where(id: ingredient_recipes.pluck(:recipe_id))
   end
