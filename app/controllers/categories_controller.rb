@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  include DeleteConcern
+
   before_action :set_category, only: %i[ show edit update destroy ]
 
   # GET /categories or /categories.json
@@ -52,14 +54,7 @@ class CategoriesController < ApplicationController
   end
 
   # DELETE /categories/1 or /categories/1.json
-  def destroy
-    @category.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to categories_path, status: :see_other, notice: "Category was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  # used at controller/concerns/delete_concern.rb
 
   private
     # Use callbacks to share common setup or constraints between actions.

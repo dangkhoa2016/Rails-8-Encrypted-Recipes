@@ -1,4 +1,6 @@
 class TagsController < ApplicationController
+  include DeleteConcern
+
   before_action :set_tag, only: %i[ show edit update destroy ]
 
   # GET /tags or /tags.json
@@ -57,14 +59,7 @@ class TagsController < ApplicationController
   end
 
   # DELETE /tags/1 or /tags/1.json
-  def destroy
-    @tag.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to tags_path, status: :see_other, notice: "Tag was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  # used at controller/concerns/delete_concern.rb
 
   private
     # Use callbacks to share common setup or constraints between actions.
