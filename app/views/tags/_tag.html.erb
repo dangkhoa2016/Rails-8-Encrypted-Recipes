@@ -1,12 +1,55 @@
-<div id="<%= dom_id tag %>">
-  <p>
-    <strong>Name:</strong>
-    <%= tag.name %>
-  </p>
-
-  <p>
-    <strong>Tag type:</strong>
-    <%= tag.tag_type %>
-  </p>
-
+<%
+  recipes_list = []
+  ingredients_list = []
+  if tag.ingredient?
+    ingredients_list = tag.ingredients_list.to_a
+    tag_color = ingredients_list.empty? ? 'secondary' : 'success'
+  else
+    recipes_list = tag.recipes_list.to_a
+    tag_color = recipes_list.empty? ? 'secondary' : 'warning'
+  end
+%>
+<div id="<%= dom_id tag %>" class='col'>
+  <div class='card bg-<%= tag_color %>-subtle border border-<%= tag_color %>-subtle'>
+    <div class='card-header py-2'>
+      <%= link_to tag.name, tag, class: 'text-decoration-none fs-5' %>
+    </div>
+    <div class='card-body'>
+      <div class='d-flex gap-2 flex-wrap'>
+        <% if tag.ingredient? %>
+          <strong>Ingredients:</strong>
+          <% ingredients_list.each do |ingredient| %>
+            <span class="badge d-flex align-items-center px-2 text-light-emphasis bg-light-subtle border border-light-subtle">
+              <%= link_to ingredient.name, ingredient, class: 'text-decoration-none text-light-emphasis' %>
+              <span class="vr mx-2"></span>
+              <a href="#">
+                <i class="bi bi-x-circle-fill"></i>
+              </a>
+            </span>
+          <% end %>
+        <% else %>
+          <strong>Recipes:</strong>
+          <% recipes_list.each do |recipe| %>
+            <span class="badge d-flex align-items-center px-2 text-dark-emphasis bg-dark-subtle border border-dark-subtle">
+              <%= link_to recipe.name, recipe, class: 'text-decoration-none text-dark-emphasis' %>
+              <span class="vr mx-2"></span>
+              <a href="#">
+                <i class="bi bi-x-circle-fill"></i>
+              </a>
+            </span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class='card-footer text-body-secondary'>
+      <small>Created <%= time_ago_in_words(tag.created_at) %> ago</small>
+      <hr class="my-1" />
+      <small>Updated <%= time_ago_in_words(tag.updated_at) %> ago</small>
+    </div>
+    <div class='d-flex card-footer justify-content-between'>
+      <%= link_to 'Show', tag, class: 'btn btn-sm btn-primary' %>
+      <%= link_to 'Edit', edit_tag_path(tag), class: 'btn btn-sm btn-secondary' %>
+      <%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+    </div>
+  </div>
 </div>

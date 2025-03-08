@@ -14,6 +14,25 @@ class Tag < ApplicationRecord
 
   encrypts :name, deterministic: true
 
+
+  attr_accessor :recipes_count, :ingredients_count, :virtual_recipes, :virtual_ingredients
+
+
+  def display_ingredients_count
+    ingredients_count || ingredients.count
+  end
+
+  def display_recipes_count
+    recipes_count || recipes.count
+  end
+
+  def ingredients_list
+    virtual_ingredients || ingredients
+  end
+
+  def recipes_list
+    virtual_recipes || recipes
+  end
   
   def recipes
     Recipe.where(id: recipe_tags.pluck(:recipe_id))

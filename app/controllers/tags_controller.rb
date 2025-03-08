@@ -3,7 +3,16 @@ class TagsController < ApplicationController
 
   # GET /tags or /tags.json
   def index
-    @tags = Tag.all
+    @tags = Tag.all.to_a.sort_by(&:name)
+    ids = @tags.pluck(:id)
+    ingredient_tags = IngredientTag.where(tag_id: ids).to_a
+    ingredients = Ingredient.where(id: ingredient_tags.pluck(:ingredient_id).uniq)
+    recipe_tags = RecipeTag.where(tag_id: ids).to_a
+    recipes = Recipe.where(id: recipe_tags.pluck(:recipe_id).uniq)
+    @tags.each do |tag|
+      tag.virtual_recipes = recipes.select { |r| recipe_tags.any? { |rt| rt.recipe_id == r.id && rt.tag_id == tag.id } }
+      tag.virtual_ingredients = ingredients.select { |i| ingredient_tags.any? { |it| it.ingredient_id == i.id && it.tag_id == tag.id } }
+    end
   end
 
   # GET /tags/1 or /tags/1.json
