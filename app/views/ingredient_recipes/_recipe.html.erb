@@ -1,0 +1,33 @@
+<div id="<%= dom_id recipe %>" class='col'>
+  <div class="card">
+    <div class="card-header">
+      <%= link_to recipe.name, recipe, class: 'text-primary-emphasis fw-bold' %>
+    </div>
+
+    <div class="card-body">
+      <% if recipe.summary.blank? %>
+        <div class='d-flex align-items-center'>
+          <i class='bi bi-emoji-frown me-1'></i><i>No summary yet</i>
+        </div>
+      <% else %>
+        <%= recipe.summary %>
+      <% end %>
+    </div>
+
+    <div class="list-group list-group-flush">
+      <% if recipe.display_ingredient_recipes.any? %>
+        <% recipe.display_ingredient_recipes.each do |ingredient_recipe| %>
+          <%= render ingredient_recipe, ingredient_recipe: ingredient_recipe %>
+        <% end %>
+      <% else %>
+        <div class="list-group-item">
+          <i class='bi bi-emoji-frown me-1'></i><i>No ingredient yet</i>
+        </div>
+      <% end %>
+    </div>
+
+    <div class='card-footer'>
+      <%= link_to "Add a ingredient", new_ingredient_recipe_path(recipe_id: recipe.id) %>
+    </div>
+  </div>
+</div>
