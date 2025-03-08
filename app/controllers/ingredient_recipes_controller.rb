@@ -3,7 +3,16 @@ class IngredientRecipesController < ApplicationController
 
   # GET /ingredient_recipes or /ingredient_recipes.json
   def index
-    @ingredient_recipes = IngredientRecipe.all
+    @recipes = Recipe.all.to_a.sort_by(&:name)
+    ingredient_recipes = IngredientRecipe.where(recipe_id: @recipes.pluck(:id)).to_a
+    ingredients = Ingredient.where(id: ingredient_recipes.pluck(:ingredient_id).uniq).to_a
+    @recipes.each do |recipe|
+      virtual_ingredient_recipes = ingredient_recipes.select { |ingredient_recipe| ingredient_recipe.recipe_id == recipe.id }
+      virtual_ingredient_recipes.each do |ingredient_recipe|
+        ingredient_recipe.virtual_ingredient = (ingredients.find { |ingredient| ingredient.id == ingredient_recipe.ingredient_id }) || Ingredient.new
+      end
+      recipe.virtual_ingredient_recipes = virtual_ingredient_recipes.sort_by { |ingredient_recipe| ingredient_recipe.virtual_ingredient.name || "" }
+    end
   end
 
   # GET /ingredient_recipes/1 or /ingredient_recipes/1.json

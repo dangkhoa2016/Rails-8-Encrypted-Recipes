@@ -1,15 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Ingredient recipes" %>
+<% content_for :title, "Ingredient and Recipes" %>
 
-<h1>Ingredient recipes</h1>
+<div class='mb-5'>
+  <div class='d-flex justify-content-between align-items-center'>
+    <h1>Ingredient and Recipes</h1>
+    <%= link_to "New ingredient recipe", new_ingredient_recipe_path, class: 'btn btn-primary' %>
+  </div>
+  <div class='clearfix'></div>
+</div>
 
-<div id="ingredient_recipes">
-  <% @ingredient_recipes.each do |ingredient_recipe| %>
-    <%= render ingredient_recipe %>
-    <p>
-      <%= link_to "Show this ingredient recipe", ingredient_recipe %>
-    </p>
+<div id="ingredient_recipes" class='row row-cols-1 row-cols-md-2 row-cols-xxl-3 mb-3 gx-3 gy-5 justify-content-center'>
+  <% @recipes.each do |recipe| %>
+    <%= render 'ingredient_recipes/recipe', recipe: recipe %>
   <% end %>
 </div>
 
