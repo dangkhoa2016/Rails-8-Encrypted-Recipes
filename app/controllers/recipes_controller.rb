@@ -1,4 +1,6 @@
 class RecipesController < ApplicationController
+  include DeleteConcern
+
   before_action :set_recipe, only: %i[ show edit update destroy ]
   include TagUpdater
 
@@ -66,14 +68,7 @@ class RecipesController < ApplicationController
   end
 
   # DELETE /recipes/1 or /recipes/1.json
-  def destroy
-    @recipe.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to recipes_path, status: :see_other, notice: "Recipe was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  # used at controller/concerns/delete_concern.rb
 
   private
     # Use callbacks to share common setup or constraints between actions.

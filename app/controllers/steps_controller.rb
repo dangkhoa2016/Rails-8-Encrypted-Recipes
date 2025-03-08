@@ -1,4 +1,6 @@
 class StepsController < ApplicationController
+  include DeleteConcern
+
   before_action :set_step, only: %i[ show edit update destroy ]
 
   # GET /steps or /steps.json
@@ -51,14 +53,7 @@ class StepsController < ApplicationController
   end
 
   # DELETE /steps/1 or /steps/1.json
-  def destroy
-    @step.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to steps_path, status: :see_other, notice: "Step was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  # used at controller/concerns/delete_concern.rb
 
   private
     # Use callbacks to share common setup or constraints between actions.

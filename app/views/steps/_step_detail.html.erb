@@ -26,6 +26,6 @@
   <div class='d-flex card-footer justify-content-between'>
     <%= link_to 'Show', step, class: 'btn btn-sm btn-primary' %>
     <%= link_to 'Edit', edit_step_path(step), class: 'btn btn-sm btn-secondary' %>
-    <%= link_to 'Destroy', step, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+    <%= link_to 'Destroy', step, method: :delete, data: confirm_delete_attributes(step), class: 'btn btn-sm btn-danger' %>
   </div>
 </div>
