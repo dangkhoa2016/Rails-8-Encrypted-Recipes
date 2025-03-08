@@ -12,11 +12,22 @@ class Step < ApplicationRecord
   encrypts :recipe_id, deterministic: true
 
 
+  after_destroy :reorder_steps
+
+
   def step_number
     super&.to_i
   end
 
   def step_number=(value)
     super value&.to_i
+  end
+
+  private
+
+  def reorder_steps
+    recipe.steps.sort_by(&:step_number).each_with_index do |step, index|
+      step.update_column(:step_number, index + 1)
+    end
   end
 end
