@@ -1,22 +1,5 @@
-<div id="<%= dom_id ingredient_recipe %>">
-  <p>
-    <strong>Ingredient:</strong>
-    <%= ingredient_recipe.ingredient_id %>
-  </p>
-
-  <p>
-    <strong>Recipe:</strong>
-    <%= ingredient_recipe.recipe_id %>
-  </p>
-
-  <p>
-    <strong>Amount:</strong>
-    <%= ingredient_recipe.amount %>
-  </p>
-
-  <p>
-    <strong>Unit:</strong>
-    <%= ingredient_recipe.unit %>
-  </p>
-
-</div>
+<% if action_name == 'show' %>
+  <%= render 'ingredient_recipes/ingredient_recipe_detail', ingredient_recipe: ingredient_recipe %>
+<% else %>
+  <%= render 'ingredient_recipes/ingredient_recipe_row', ingredient_recipe: ingredient_recipe %>
+<% end %>

@@ -14,11 +14,15 @@ class IngredientRecipe < ApplicationRecord
   encrypts :unit
 
 
-  attr_accessor :virtual_ingredient
+  attr_accessor :virtual_ingredient, :virtual_recipe
 
 
   def display_ingredient
     virtual_ingredient || ingredient
+  end
+
+  def display_recipe
+    virtual_recipe || recipe
   end
 
   def amount

@@ -4,7 +4,7 @@
     <% ingredient_recipes.each do |ingredient_recipe| %>
       <li class='list-group-item list-group-item-secondary d-flex justify-content-between column-gap-2'>
         <div class='info'>
-          <%= ingredient_recipe.virtual_ingredient.name %>
+          <%= ingredient_recipe.virtual_ingredient&.name || '[No name]' %>
           <span class='badge bg-secondary d-block mt-2'>
             <%= ingredient_recipe.display_amount %> <%= ingredient_recipe.unit %>
           </span>

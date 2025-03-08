@@ -1,0 +1,22 @@
+<div class='col'>
+  <div class="card">
+    <div class="card-header">
+      <%= link_to recipe.name, recipe, class: 'text-primary-emphasis fw-bold' %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= recipe.summary %></p>
+    </div>
+    <% if recipe.display_ingredient_recipes.any? %>
+      <div class="list-group list-group-flush">
+        <% recipe.display_ingredient_recipes.each do |ingredient_recipe| %>
+          <%= render ingredient_recipe, ingredient_recipe: ingredient_recipe %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="card-footer">
+        <p class="card-text">No ingredient yet</p>
+        <p class='mb-0'><%= link_to "Add a ingredient", new_ingredient_recipe_path(recipe_id: recipe.id) %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
