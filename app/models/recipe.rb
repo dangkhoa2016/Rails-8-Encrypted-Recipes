@@ -39,8 +39,12 @@ class Recipe < ApplicationRecord
   encrypts :summary
 
 
-  attr_accessor :steps_count, :ingredients_count, :tags_count
+  attr_accessor :steps_count, :ingredients_count, :tags_count, :virtual_ingredient_recipes
 
+
+  def display_ingredient_recipes
+    virtual_ingredient_recipes || ingredient_recipes
+  end
 
   def display_steps_count
     steps_count || steps.count
