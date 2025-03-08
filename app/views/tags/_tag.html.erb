@@ -49,7 +49,7 @@
     <div class='d-flex card-footer justify-content-between'>
       <%= link_to 'Show', tag, class: 'btn btn-sm btn-primary' %>
       <%= link_to 'Edit', edit_tag_path(tag), class: 'btn btn-sm btn-secondary' %>
-      <%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+      <%= link_to 'Destroy', tag, method: :delete, data: confirm_delete_attributes(tag), class: 'btn btn-sm btn-danger' %>
     </div>
   </div>
 </div>

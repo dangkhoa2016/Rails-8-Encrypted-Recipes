@@ -1,4 +1,6 @@
 class IngredientsController < ApplicationController
+  include DeleteConcern
+
   before_action :set_ingredient, only: %i[ show edit update destroy ]
 
   # GET /ingredients or /ingredients.json
@@ -61,14 +63,7 @@ class IngredientsController < ApplicationController
   end
 
   # DELETE /ingredients/1 or /ingredients/1.json
-  def destroy
-    @ingredient.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to ingredients_path, status: :see_other, notice: "Ingredient was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+  # used at controller/concerns/delete_concern.rb  
 
   private
     # Use callbacks to share common setup or constraints between actions.

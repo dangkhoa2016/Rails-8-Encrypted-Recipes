@@ -2,11 +2,11 @@ class Recipe < ApplicationRecord
   include BelongsToReference
 
   belongs_to :category
-  has_many :ingredient_recipes
+  has_many :ingredient_recipes, dependent: :destroy
   # has_many :ingredients, through: :ingredient_recipes
-  has_many :recipe_tags
+  has_many :recipe_tags, dependent: :destroy
   # has_many :tags, through: :recipe_tags
-  has_many :steps
+  has_many :steps, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2, maximum: 150 }
 

@@ -38,4 +38,15 @@ module ApplicationHelper
   def is_current_page?(model)
     controller_name == model.to_s.pluralize && action_name != 'index'
   end
+
+  def confirm_delete_attributes(record)
+    confirm_message = "Are you sure you want to delete this #{record.class.model_name.human.downcase} with Id: #{record.id}?"
+    {
+      turbo_method: 'delete',
+      turbo_confirm: confirm_message,
+      confirm: confirm_message,
+      turbo_frame: 'modal_frame', closable: false, remote: true,
+      confirm_yes: 'Yes', modal_title: 'Please Confirm',
+    }
+  end
 end
