@@ -1,7 +1,6 @@
 class TagsController < ApplicationController
   include DeleteConcern
-
-  before_action :set_tag, only: %i[ show edit update destroy ]
+  include LoadRecordConcern
 
   # GET /tags or /tags.json
   def index
@@ -63,9 +62,6 @@ class TagsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_tag
-      @tag = Tag.find(params.expect(:id))
-    end
 
     # Only allow a list of trusted parameters through.
     def tag_params
