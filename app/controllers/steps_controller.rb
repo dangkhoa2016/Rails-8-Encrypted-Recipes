@@ -1,7 +1,6 @@
 class StepsController < ApplicationController
   include DeleteConcern
-
-  before_action :set_step, only: %i[ show edit update destroy ]
+  include LoadRecordConcern
 
   # GET /steps or /steps.json
   def index
@@ -57,9 +56,6 @@ class StepsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_step
-      @step = Step.find(params.expect(:id))
-    end
 
     # Only allow a list of trusted parameters through.
     def step_params
