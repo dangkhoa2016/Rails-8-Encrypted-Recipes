@@ -1,0 +1,64 @@
+<%
+  id = params[:id].to_i
+  common_subject = [
+    "<span class='text-danger bs-opacity-25'>#{controller_name.singularize}</span>",
+    "with",
+    "<span class='text-danger bs-opacity-25'>Id: #{id}</span>"
+  ].join(' ').html_safe
+%>
+
+<div class="alert alert-danger">
+  <h2>
+    <i class='bi bi-exclamation-triangle'></i> Record Not Found
+  </h2>
+  <p>Some reasons why this is happening, you might want to check:</p>
+  <div class='mt-4 row row-cols-1 gx-3 gy-2'>
+    <div class='col'>
+      <div class='card'>
+        <div class='card-body'>
+          <h5 class='card-title'>The <%= common_subject %> does not exist</h5>
+          <p class='mb-0'>Are you sure you have the correct id?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class='col'>
+      <div class='card'>
+        <div class='card-body'>
+          <h5 class='card-title'>The <%= common_subject %> might have been deleted before you tried to access it</h5>
+          <p class='mb-0'>Someone might have deleted it or it might have been deleted automatically</p>
+        </div>
+      </div>
+    </div>
+
+    <div class='col'>
+      <div class='card'>
+        <div class='card-body'>
+          <h5 class='card-title'>You don't have the necessary permissions to access the <%= common_subject %></h5>
+          <p class='mb-0'>Is this record confidential?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class='col'>
+      <div class='card'>
+        <div class='card-body'>
+          <h5 class='card-title'>The <%= common_subject %> might have been archived</h5>
+          <p class='mb-0'>Archived records are not accessible, only super users can access them</p>
+        </div>
+      </div>
+    </div>
+
+    <div class='col'>
+      <div class='card'>
+        <div class='card-body'>
+          <h5 class='card-title'>Failed to load the <%= common_subject %></h5>
+          <p class='mb-2'>There might be a problem with the server or the network connection</p>
+          <p class='mb-0'>Please try again later</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Back to list', url_for(controller: controller_name, action: :index), class: 'btn btn-primary' %>

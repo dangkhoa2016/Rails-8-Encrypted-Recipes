@@ -1,8 +1,7 @@
 class IngredientsController < ApplicationController
   include DeleteConcern
-
-  before_action :set_ingredient, only: %i[ show edit update destroy ]
   include TagUpdater
+  include LoadRecordConcern
 
   # GET /ingredients or /ingredients.json
   def index
@@ -68,9 +67,6 @@ class IngredientsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_ingredient
-      @ingredient = Ingredient.find(params.expect(:id))
-    end
 
     # Only allow a list of trusted parameters through.
     def ingredient_params
