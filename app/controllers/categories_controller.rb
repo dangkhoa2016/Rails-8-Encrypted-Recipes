@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
   include DeleteConcern
-
-  before_action :set_category, only: %i[ show edit update destroy ]
+  include LoadRecordConcern
 
   # GET /categories or /categories.json
   def index
@@ -58,9 +57,6 @@ class CategoriesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params.expect(:id))
-    end
 
     # Only allow a list of trusted parameters through.
     def category_params
