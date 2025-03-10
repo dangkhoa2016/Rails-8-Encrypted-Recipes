@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     member do
       get :add_ingredient
       post :create_ingredient
+
+      get :add_step
+      post :create_step
     end
   end
 
