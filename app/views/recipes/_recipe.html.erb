@@ -2,12 +2,6 @@
 if action_name == 'show'
   steps = recipe.steps.sort_by(&:step_number)
   display_steps_count = steps.count
-  ingredient_recipes = recipe.ingredient_recipes.to_a
-  ingredients = Ingredient.where(id: ingredient_recipes.map(&:ingredient_id))
-  ingredient_recipes.each do |ingredient_recipe|
-    ingredient_recipe.virtual_ingredient = (ingredients.find { |i| i.id == ingredient_recipe.ingredient_id }) || Ingredient.new
-  end
-  ingredient_recipes.sort_by! { |ir| ir.virtual_ingredient.name || '' }
 else
   display_steps_count = recipe.display_steps_count
   display_ingredients_count = recipe.display_ingredients_count
@@ -83,7 +77,7 @@ border_color = case display_steps_count
       <% if action_name == 'show' %>
         <%= render 'recipes/recipe_steps', steps: steps %>
         <hr class="my-1" />
-        <%= render 'recipes/recipe_ingredients', ingredient_recipes: ingredient_recipes %>
+        <%= render 'recipes/recipe_ingredients' %>
       <% end %>
     </div>
 

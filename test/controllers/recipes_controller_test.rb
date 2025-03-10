@@ -52,7 +52,7 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
       is_vegetarian: @recipe.is_vegetarian,
       name: @recipe.name,
       prepare_duration: @recipe.prepare_duration,
-      summary: @recipe.summary,
+      summary: @recipe.summary
     }
     patch recipe_url(@recipe), params: { recipe: recipe_params, tag_ids: Tag.first(2).pluck(:id) }
     assert_redirected_to recipe_url(@recipe)
@@ -64,5 +64,105 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to recipes_url
+  end
+
+  test "should render add ingredient form using recipes/ingredient_form partial" do
+    get add_ingredient_recipe_url(@recipe, ingredient_recipes_page: true)
+    ingredient_recipe = controller.instance_variable_get :@ingredient_recipe
+    assert_not_nil ingredient_recipe
+    assert_equal ingredient_recipe.recipe_id, @recipe.id
+    assert_equal ingredient_recipe.new_record?, true
+    assert_response :success
+    assert_match " action=\"/recipes/#{@recipe.id}/create_ingredient?ingredient_recipes_page=true\" ", response.body
+    assert_match " method=\"post\">", response.body
+    assert_match " data-disable-with=\"Submit\" ", response.body
+  end
+
+  test "should create ingredient recipe and render ingredient list using recipes/ingredient_list partial" do
+    assert_difference("IngredientRecipe.count") do
+      create_params = {
+        ingredient_id: Ingredient.last.id,
+        amount: 1,
+        unit: "cup"
+      }
+      post create_ingredient_recipe_url(@recipe), params: { ingredient_recipe: create_params }, as: :turbo_stream
+    end
+    ingredient_recipe = controller.instance_variable_get :@ingredient_recipe
+    assert_not_nil ingredient_recipe
+    assert_equal ingredient_recipe.recipe_id, @recipe.id
+    assert_equal ingredient_recipe.new_record?, false
+    assert_match " class='list-group-item list-group-item-secondary d-flex justify-content-between column-gap-2'>", response.body
+  end
+
+  test "should create ingredient recipe and render ingredient list using ingredients/ingredient_list partial" do
+    assert_difference("IngredientRecipe.count") do
+      create_params = {
+        ingredient_id: Ingredient.last.id,
+        amount: 1,
+        unit: "cup"
+      }
+      post create_ingredient_recipe_url(@recipe, ingredient_recipes_page: true), params: { ingredient_recipe: create_params }, as: :turbo_stream
+    end
+    ingredient_recipe = controller.instance_variable_get :@ingredient_recipe
+    assert_not_nil ingredient_recipe
+    assert_equal ingredient_recipe.recipe_id, @recipe.id
+    assert_equal ingredient_recipe.new_record?, false
+    assert_match '<span class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill">', response.body
+  end
+
+  test "should create ingredient recipe and redirect to the created ingredient recipe" do
+    assert_difference("IngredientRecipe.count") do
+      create_params = {
+        ingredient_id: Ingredient.last.id,
+        amount: 1.5,
+        unit: "gram"
+      }
+      post create_ingredient_recipe_url(@recipe), params: { ingredient_recipe: create_params }
+    end
+    assert_redirected_to recipe_url(@recipe)
+  end
+
+  test "should display error message when ingredient id is missing" do
+    create_params = {
+      ingredient_id: nil,
+      amount: 1.5,
+      unit: "gram"
+    }
+    post create_ingredient_recipe_url(@recipe), params: { ingredient_recipe: create_params }
+    assert_response :success
+    assert_match "Ingredient must exist", response.body
+  end
+
+  test "should display error message when amount is missing" do
+    create_params = {
+      ingredient_id: Ingredient.last.id,
+      amount: nil,
+      unit: "gram"
+    }
+    post create_ingredient_recipe_url(@recipe), params: { ingredient_recipe: create_params }
+    assert_response :success
+    assert_equal controller.instance_variable_get(:@ingredient_recipe).errors.full_messages, [ "Amount is not a number" ]
+  end
+
+  test "should display error message when amount is not a number" do
+    create_params = {
+      ingredient_id: Ingredient.last.id,
+      amount: "invalid",
+      unit: "gram"
+    }
+    post create_ingredient_recipe_url(@recipe), params: { ingredient_recipe: create_params }
+    assert_response :success
+    assert_equal controller.instance_variable_get(:@ingredient_recipe).errors.full_messages, [ "Amount must be greater than 0" ]
+  end
+
+  test "should display error message when unit is missing" do
+    create_params = {
+      ingredient_id: Ingredient.last.id,
+      amount: 1.5,
+      unit: nil
+    }
+    post create_ingredient_recipe_url(@recipe), params: { ingredient_recipe: create_params }
+    assert_response :success
+    assert_equal controller.instance_variable_get(:@ingredient_recipe).errors.full_messages, [ "Unit can't be blank" ]
   end
 end

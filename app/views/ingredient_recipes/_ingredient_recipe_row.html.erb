@@ -14,7 +14,7 @@
     <%= link_to edit_ingredient_recipe_path(ingredient_recipe), class: 'text-secondary' do %>
       <i class="bi bi-pencil-square"></i>
     <% end %>
-    <%= link_to ingredient_recipe, class: 'text-danger', data: { confirm: "Are you sure?", turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+    <%= link_to ingredient_recipe, class: 'text-danger', data: confirm_delete_attributes(ingredient_recipe) do %>
       <i class="bi bi-trash"></i>
     <% end %>
   </div>

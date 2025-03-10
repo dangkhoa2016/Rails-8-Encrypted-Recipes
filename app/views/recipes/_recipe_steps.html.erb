@@ -18,7 +18,7 @@
             <%= link_to edit_step_path(step), class: 'text-secondary' do %>
               <i class="bi bi-pencil-square"></i>
             <% end %>
-            <%= link_to step, class: 'text-danger', data: { confirm: "Are you sure?", turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+            <%= link_to step, class: 'text-danger', data: confirm_delete_attributes(step) do %>
               <i class="bi bi-trash"></i>
             <% end %>
           </div>
