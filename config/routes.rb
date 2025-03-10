@@ -3,7 +3,13 @@ Rails.application.routes.draw do
 
   resources :tags
   resources :steps
-  resources :recipes
+  resources :recipes do
+    member do
+      get :add_ingredient
+      post :create_ingredient
+    end
+  end
+
   resources :ingredients
   resources :categories
   resources :ingredient_recipes

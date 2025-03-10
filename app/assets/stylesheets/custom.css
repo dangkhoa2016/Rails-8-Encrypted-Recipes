@@ -1,8 +1,8 @@
-/* @media (max-width: 685px) {
-  #categories.row-cols-sm-2>* {
-    width: 100% !important
-  }
-} */
+select[aria-readonly="true"],select[readonly="true"],select[readonly="readonly"] {
+  pointer-events: none;
+  background-color: var(--bs-secondary-bg);
+}
+
 .border-top-sm {
   border-top-width: var(--bs-focus-ring-width);
 }

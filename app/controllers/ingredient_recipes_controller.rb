@@ -22,7 +22,9 @@ class IngredientRecipesController < ApplicationController
 
   # GET /ingredient_recipes/new
   def new
+    @recipe = Recipe.find_by(id: params[:recipe_id]) if params[:recipe_id].present?
     @ingredient_recipe = IngredientRecipe.new
+    @ingredient_recipe.recipe_id = @recipe.id if @recipe.present?
   end
 
   # GET /ingredient_recipes/1/edit
