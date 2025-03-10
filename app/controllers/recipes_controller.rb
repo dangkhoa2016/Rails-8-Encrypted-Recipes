@@ -2,6 +2,7 @@ class RecipesController < ApplicationController
   include DeleteConcern
   include LoadRecordConcern
   before_action :set_ingredient, only: [:add_ingredient, :create_ingredient]
+  before_action :set_step, only: [:add_step, :create_step]
 
   # GET /recipes or /recipes.json
   def index
@@ -93,6 +94,30 @@ class RecipesController < ApplicationController
     end
   end
 
+  def add_step
+    render partial: 'recipes/step_form', locals: { step: @step }
+  end
+
+  def create_step
+    if @step.save
+      respond_to do |format|
+        format.html { redirect_to @recipe, notice: "Step was successfully added." }
+        format.json { render :show, status: :created, location: @recipe }
+        format.turbo_stream do
+          is_from_steps_page = params[:steps_page].present?
+          render turbo_stream: [
+            turbo_stream.update("recipe-#{@recipe.id}-steps",
+              partial: is_from_steps_page ? "steps/step_list" : "recipes/step_list",
+              locals: { steps: @recipe.steps }),
+            turbo_stream.append(@recipe, '<script>closeModal()</script>')
+          ]
+        end
+      end
+    else
+      add_step
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
 
@@ -128,11 +153,21 @@ class RecipesController < ApplicationController
     end
 
     def additional_actions_for_load_record
-      [:add_ingredient, :create_ingredient]
+      [:add_ingredient, :create_ingredient, :add_step, :create_step]
     end
 
     def set_ingredient
       @ingredient_recipe = IngredientRecipe.new(ingredient_recipe_params)
       @ingredient_recipe.recipe = @recipe
+    end
+    
+    def step_params
+      params.require(:step).permit( :name, :step_number, :description) if action_name == 'create_step'
+    end
+
+    def set_step
+      @step = Step.new(step_params)
+      @step.step_number = @recipe.steps.size + 1
+      @step.recipe = @recipe
     end
 end
