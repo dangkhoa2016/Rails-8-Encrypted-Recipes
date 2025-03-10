@@ -1,0 +1,33 @@
+<% url = create_step_recipe_path(@recipe, steps_page: request.query_parameters["steps_page"]) %>
+<%= form_with(model: step, url: url) do |form| %>
+  <% if step.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h5>
+      <ul class='mb-0'>
+        <% step.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name,
+      class: "form-control#{" is-invalid" if step.errors[:name].any?}" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control#{" is-invalid" if step.errors[:description].any?}" %>
+  </div>
+
+  <div class="mt-3">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<script>
+  var step_name = document.querySelector('#step_name');
+  if (step_name) { setTimeout(() => step_name.focus(), 500); }
+</script>

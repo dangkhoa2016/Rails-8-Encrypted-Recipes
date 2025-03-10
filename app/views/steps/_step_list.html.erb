@@ -1,0 +1,3 @@
+<% steps.sort_by(&:step_number).each do |step| %>
+  <%= render 'steps/step_row', step: step %>
+<% end %>
