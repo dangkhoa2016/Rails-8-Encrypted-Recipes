@@ -88,6 +88,15 @@ class Recipe < ApplicationRecord
     Tag.where(id: recipe_tags.pluck(:tag_id))
   end
 
+  def preload_ingredient_recipes
+    ingredient_recipes_arr = ingredient_recipes.to_a
+    ingredients = Ingredient.where(id: ingredient_recipes_arr.map(&:ingredient_id))
+    ingredient_recipes_arr.each do |ingredient_recipe|
+      ingredient_recipe.virtual_ingredient = (ingredients.find { |i| i.id == ingredient_recipe.ingredient_id }) || Ingredient.new
+    end
+    ingredient_recipes_arr.sort_by! { |ir| ir.virtual_ingredient.name || '' }
+  end
+
 
   class << self
     def count_records_by_ids(ids, model)

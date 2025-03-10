@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   include DeleteConcern
   include LoadRecordConcern
+  before_action :set_ingredient, only: [:add_ingredient, :create_ingredient]
 
   # GET /recipes or /recipes.json
   def index
@@ -66,7 +67,31 @@ class RecipesController < ApplicationController
   end
 
   # DELETE /recipes/1 or /recipes/1.json
-  # used at controller/concerns/delete_concern.rb  
+  # used at controller/concerns/delete_concern.rb
+
+  def add_ingredient
+    render partial: 'recipes/ingredient_form', locals: { ingredient_recipe: @ingredient_recipe }
+  end
+
+  def create_ingredient
+    if @ingredient_recipe.save
+      respond_to do |format|
+        format.html { redirect_to @recipe, notice: "Ingredient was successfully added." }
+        format.json { render :show, status: :created, location: @recipe }
+        format.turbo_stream do
+          is_from_ingredient_recipes_page = params[:ingredient_recipes_page].present?
+          render turbo_stream: [
+            turbo_stream.update("recipe-#{@recipe.id}-ingredients",
+              partial: is_from_ingredient_recipes_page ? "ingredient_recipes/ingredient_list" : "recipes/ingredient_list",
+              locals: { ingredient_recipes: @recipe.preload_ingredient_recipes }),
+            turbo_stream.append(@recipe, '<script>closeModal()</script>')
+          ]
+        end
+      end
+    else
+      add_ingredient
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -96,5 +121,18 @@ class RecipesController < ApplicationController
           recipe_tag.update(tag_id: new_tags[index])
         end
       end
+    end
+
+    def ingredient_recipe_params
+      params.require(:ingredient_recipe).permit(:ingredient_id, :amount, :unit) if action_name == 'create_ingredient'
+    end
+
+    def additional_actions_for_load_record
+      [:add_ingredient, :create_ingredient]
+    end
+
+    def set_ingredient
+      @ingredient_recipe = IngredientRecipe.new(ingredient_recipe_params)
+      @ingredient_recipe.recipe = @recipe
     end
 end
