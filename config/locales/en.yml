@@ -29,3 +29,10 @@
 
 en:
   hello: "Hello world"
+
+  activerecord:
+    attributes:
+      user:
+        password_should_be_at_least_x_characters:
+          one: "Password should be at least %{count} character"
+          other: "Password should be at least %{count} characters"

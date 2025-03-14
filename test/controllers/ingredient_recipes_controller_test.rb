@@ -1,4 +1,5 @@
 require "test_helper"
+require "controller_test_helper"
 
 class IngredientRecipesControllerTest < ActionDispatch::IntegrationTest
   setup do

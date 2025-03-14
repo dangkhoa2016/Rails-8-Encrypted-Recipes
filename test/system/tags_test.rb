@@ -1,4 +1,5 @@
 require "application_system_test_case"
+require "system_test_helper"
 
 class TagsTest < ApplicationSystemTestCase
   setup do
@@ -12,11 +13,11 @@ class TagsTest < ApplicationSystemTestCase
 
   test "should create tag" do
     visit tags_url
-    click_on "New tag"
+    click_on "New tag", match: :first, class: [ "btn", "btn-primary" ]
 
-    fill_in "Name", with: @tag.name
-    fill_in "Tag type", with: @tag.tag_type
-    click_on "Create Tag"
+    fill_in "Name", with: @tag.name + " new"
+    select("Ingredient", from: "tag[tag_type]")
+    click_on "Submit"
 
     assert_text "Tag was successfully created"
     click_on "Back"
@@ -24,11 +25,11 @@ class TagsTest < ApplicationSystemTestCase
 
   test "should update Tag" do
     visit tag_url(@tag)
-    click_on "Edit this tag", match: :first
+    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
 
-    fill_in "Name", with: @tag.name
-    fill_in "Tag type", with: @tag.tag_type
-    click_on "Update Tag"
+    fill_in "Name", with: @tag.name + " updated"
+    select("Recipe", from: "tag[tag_type]")
+    click_on "Submit"
 
     assert_text "Tag was successfully updated"
     click_on "Back"
@@ -36,8 +37,11 @@ class TagsTest < ApplicationSystemTestCase
 
   test "should destroy Tag" do
     visit tag_url(@tag)
-    click_on "Destroy this tag", match: :first
+    click_on "Destroy", match: :first
+    within("div.modal-footer") do
+      click_on "Yes"
+    end
 
-    assert_text "Tag was successfully destroyed"
+    assert_text /Tag with Id: \[\d+\] was successfully destroyed/
   end
 end
