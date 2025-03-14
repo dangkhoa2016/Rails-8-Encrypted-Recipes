@@ -1,4 +1,5 @@
 require "application_system_test_case"
+require "system_test_helper"
 
 class RecipesTest < ApplicationSystemTestCase
   setup do
@@ -12,16 +13,16 @@ class RecipesTest < ApplicationSystemTestCase
 
   test "should create recipe" do
     visit recipes_url
-    click_on "New recipe"
+    click_on "New recipe", match: :first, class: [ "btn", "btn-primary" ]
 
     fill_in "Calories", with: @recipe.calories
-    fill_in "Category", with: @recipe.category_id
-    fill_in "Cuisine type", with: @recipe.cuisine_type
+    select("Category 1", from: "recipe[category_id]")
+    select("American", from: "recipe[cuisine_type]")
     check "Is vegetarian" if @recipe.is_vegetarian
-    fill_in "Name", with: @recipe.name
+    fill_in "Name", with: @recipe.name + " new"
     fill_in "Prepare duration", with: @recipe.prepare_duration
     fill_in "Summary", with: @recipe.summary
-    click_on "Create Recipe"
+    click_on "Submit"
 
     assert_text "Recipe was successfully created"
     click_on "Back"
@@ -29,16 +30,16 @@ class RecipesTest < ApplicationSystemTestCase
 
   test "should update Recipe" do
     visit recipe_url(@recipe)
-    click_on "Edit this recipe", match: :first
+    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
 
     fill_in "Calories", with: @recipe.calories
-    fill_in "Category", with: @recipe.category_id
-    fill_in "Cuisine type", with: @recipe.cuisine_type
+    select("Category 2", from: "recipe[category_id]")
+    select("Italian", from: "recipe[cuisine_type]")
     check "Is vegetarian" if @recipe.is_vegetarian
-    fill_in "Name", with: @recipe.name
+    fill_in "Name", with: @recipe.name + " updated"
     fill_in "Prepare duration", with: @recipe.prepare_duration
     fill_in "Summary", with: @recipe.summary
-    click_on "Update Recipe"
+    click_on "Submit"
 
     assert_text "Recipe was successfully updated"
     click_on "Back"
@@ -46,8 +47,11 @@ class RecipesTest < ApplicationSystemTestCase
 
   test "should destroy Recipe" do
     visit recipe_url(@recipe)
-    click_on "Destroy this recipe", match: :first
+    click_on "Destroy", match: :first
+    within("div.modal-footer") do
+      click_on "Yes"
+    end
 
-    assert_text "Recipe was successfully destroyed"
+    assert_text /Recipe with Id: \[\d+\] was successfully destroyed/
   end
 end

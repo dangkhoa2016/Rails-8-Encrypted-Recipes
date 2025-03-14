@@ -3,11 +3,14 @@
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
 
+default_url_options = { host: ENV.fetch("HOST", "localhost"), port: ENV.fetch("PORT", 3000) }
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
+  config.hosts << "127.0.0.1"
 
   # Eager loading loads your entire application. When running a single test locally,
   # this is usually not necessary, and can slow down your test suite. However, it's
@@ -36,8 +39,11 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # Set localhost to be used by links generated in mailer templates.
+  # config.default_url_options = default_url_options
+  config.action_mailer.default_url_options = default_url_options
+  config.hosts << "#{default_url_options[:host]}:#{default_url_options[:port]}"
+  config.hosts << "www.example.com"
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
