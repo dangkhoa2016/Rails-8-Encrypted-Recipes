@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   devise_for :users
+  resource :profile, only: [:show], controller: 'profiles'
+
   resources :tags
   resources :steps
   resources :recipes do
@@ -37,7 +39,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :homes, path: "/", controller: :home
+  # resources :homes, path: "/", controller: :home
 
   root "home#index"
 end

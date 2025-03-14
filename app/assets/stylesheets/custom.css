@@ -72,3 +72,7 @@ select[aria-readonly="true"],select[readonly="true"],select[readonly="readonly"]
     padding-top: 5px;
   }
 }
+
+#offcanvasExample .offcanvas-body {
+  height: calc(100% - 3rem - 62px - 14px);
+}

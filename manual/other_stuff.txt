@@ -6,3 +6,8 @@ rails generate devise:install
 rails generate devise users
 rails generate devise:views
 rails generate devise:controllers users
+rails generate controller Profiles show
+
+user = User.new(email: 'admin@admin.admin')
+user.password = '123456'
+user.save
