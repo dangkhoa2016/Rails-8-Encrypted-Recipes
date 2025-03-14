@@ -1,4 +1,5 @@
 require "application_system_test_case"
+require "system_test_helper"
 
 class IngredientsTest < ApplicationSystemTestCase
   setup do
@@ -12,11 +13,11 @@ class IngredientsTest < ApplicationSystemTestCase
 
   test "should create ingredient" do
     visit ingredients_url
-    click_on "New ingredient"
+    click_on "New ingredient", match: :first, class: [ "btn", "btn-primary" ]
 
     fill_in "Description", with: @ingredient.description
-    fill_in "Name", with: @ingredient.name
-    click_on "Create Ingredient"
+    fill_in "Name", with: @ingredient.name + " new"
+    click_on "Submit"
 
     assert_text "Ingredient was successfully created"
     click_on "Back"
@@ -24,11 +25,11 @@ class IngredientsTest < ApplicationSystemTestCase
 
   test "should update Ingredient" do
     visit ingredient_url(@ingredient)
-    click_on "Edit this ingredient", match: :first
+    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
 
     fill_in "Description", with: @ingredient.description
-    fill_in "Name", with: @ingredient.name
-    click_on "Update Ingredient"
+    fill_in "Name", with: @ingredient.name + " updated"
+    click_on "Submit"
 
     assert_text "Ingredient was successfully updated"
     click_on "Back"
@@ -36,8 +37,11 @@ class IngredientsTest < ApplicationSystemTestCase
 
   test "should destroy Ingredient" do
     visit ingredient_url(@ingredient)
-    click_on "Destroy this ingredient", match: :first
+    click_on "Destroy", match: :first
+    within("div.modal-footer") do
+      click_on "Yes"
+    end
 
-    assert_text "Ingredient was successfully destroyed"
+    assert_text /Ingredient with Id: \[\d+\] was successfully destroyed/
   end
 end

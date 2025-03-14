@@ -1,4 +1,5 @@
 require "test_helper"
+require "controller_test_helper"
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do

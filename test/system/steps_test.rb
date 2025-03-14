@@ -1,4 +1,5 @@
 require "application_system_test_case"
+require "system_test_helper"
 
 class StepsTest < ApplicationSystemTestCase
   setup do
@@ -12,13 +13,13 @@ class StepsTest < ApplicationSystemTestCase
 
   test "should create step" do
     visit steps_url
-    click_on "New step"
+    click_on "New step", match: :first, class: [ "btn", "btn-primary" ]
 
     fill_in "Description", with: @step.description
-    fill_in "Name", with: @step.name
-    fill_in "Recipe", with: @step.recipe_id
+    fill_in "Name", with: @step.name + " new"
+    select("Recipe 1", from: "step[recipe_id]")
     fill_in "Step number", with: @step.step_number
-    click_on "Create Step"
+    click_on "Submit"
 
     assert_text "Step was successfully created"
     click_on "Back"
@@ -26,13 +27,13 @@ class StepsTest < ApplicationSystemTestCase
 
   test "should update Step" do
     visit step_url(@step)
-    click_on "Edit this step", match: :first
+    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
 
     fill_in "Description", with: @step.description
-    fill_in "Name", with: @step.name
-    fill_in "Recipe", with: @step.recipe_id
+    fill_in "Name", with: @step.name + " updated"
+    select("Recipe 2", from: "step[recipe_id]")
     fill_in "Step number", with: @step.step_number
-    click_on "Update Step"
+    click_on "Submit"
 
     assert_text "Step was successfully updated"
     click_on "Back"
@@ -40,8 +41,11 @@ class StepsTest < ApplicationSystemTestCase
 
   test "should destroy Step" do
     visit step_url(@step)
-    click_on "Destroy this step", match: :first
+    click_on "Destroy", match: :first
+    within("div.modal-footer") do
+      click_on "Yes"
+    end
 
-    assert_text "Step was successfully destroyed"
+    assert_text /Step with Id: \[\d+\] was successfully destroyed/
   end
 end
