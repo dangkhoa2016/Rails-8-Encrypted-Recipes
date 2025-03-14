@@ -1,3 +1,8 @@
 bundle add dotenv-rails --group "development, test"
 
 rails g controller HomeController index
+
+rails generate devise:install
+rails generate devise users
+rails generate devise:views
+rails generate devise:controllers users
