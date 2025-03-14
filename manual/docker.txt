@@ -1,0 +1,34 @@
+
+docker build -t rails_8_encrypted_recipes .
+
+----
+docker logs rails_8_encrypted_recipes -f
+docker logs 7ddebb438551 -f
+----
+
+docker run -it --rm --user root rails_8_encrypted_recipes bash
+
+run the image:
+docker run -it --rm rails_8_encrypted_recipes bash
+
+./bin/thrust ./bin/rails server
+
+docker run -p 4000:80 -e RAILS_MASTER_KEY=$(cat config/master.key) -e ADMIN_EMAIL="admin@admin.admin" --name rails_8_encrypted_recipes rails_8_encrypted_recipes
+docker run -d -p 4000:80 -e RAILS_MASTER_KEY=$(cat config/master.key) --name rails_8_encrypted_recipes rails_8_encrypted_recipes
+docker run -d -p 4000:80 -e RAILS_MASTER_KEY=$(cat config/credentials/production.key) --name rails_8_encrypted_recipes rails_8_encrypted_recipes
+docker run -d -p 4000:80  --name rails_8_encrypted_recipes rails_8_encrypted_recipes
+
+docker run -p 4000:4000 -e PORT=4000 --name rails_8_encrypted_recipes rails_8_encrypted_recipes
+
+docker exec -it rails_8_encrypted_recipes bash
+docker exec -it 03ab1d8bad4d bash
+
+docker stop rails_8_encrypted_recipes
+
+docker commit 7ddebb438551 rails_8_encrypted_recipes
+
+docker cp ./config/credentials/production.key 7ddebb438551:/rails/config/credentials/
+docker cp ./.env.sample 7ddebb438551:/rails/.env
+
+docker exec -it 7ddebb438551 bin/rails db:migrate
+
