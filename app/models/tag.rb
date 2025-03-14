@@ -65,5 +65,21 @@ class Tag < ApplicationRecord
     def count_ingredients_by_ids(ids)
       count_records_by_ids(ids, Ingredient.name)
     end
+
+    def count_recipes
+      RecipeTag.group(:tag_id).count("id").transform_keys(&:to_i)
+    end
+
+    def count_ingredients
+      IngredientTag.group(:tag_id).count("id").transform_keys(&:to_i)
+    end
+
+    def recipe_tags_with_count
+      Tag.recipe.preload(:recipe_tags).sort_by(&:name)
+    end
+
+    def ingredient_tags_with_count
+      Tag.ingredient.preload(:ingredient_tags).sort_by(&:name)
+    end
   end
 end

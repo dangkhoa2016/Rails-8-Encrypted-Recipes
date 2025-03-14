@@ -1,0 +1,164 @@
+<% content_for :title, "Recipe Dashboard" %>
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="no-cache">
+<% end %>
+
+<h1 class="display-6 fw-bold">Recipe Dashboard</h1>
+
+<div class="row row-gap-4 my-4">
+  <!-- Widget 1: Categories -->
+  <div id="categories-widget" class="col-md-3 col-sm-6 dashboard-widget">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="d-flex flex-column flex-xl-row justify-content-xl-center align-items-xl-center flex-xl-row gap-2">
+          <i class="bi bi-bookmark-fill fs-2"></i>
+          <h5 class="card-title">Categories</h5>
+        </div>
+        <p class="card-text">Total: <span id="categories-count">*</span></p>
+        <%= link_to 'Details', categories_path, class: 'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Widget 2: Recipes -->
+  <div id="recipes-widget" class="col-md-3 col-sm-6 dashboard-widget">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="d-flex flex-column flex-xl-row justify-content-xl-center align-items-xl-center flex-xl-row gap-2">
+          <i class="bi bi-menu-up fs-2"></i>
+          <h5 class="card-title">Recipes</h5>
+        </div>
+        <p class="card-text">Total: <span id="recipes-count">*</span></p>
+        <%= link_to 'Details', recipes_path, class: 'btn btn-success' %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Widget 3: Tags -->
+  <div id="tags-widget" class="col-md-3 col-sm-6 dashboard-widget">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="d-flex flex-column flex-xl-row justify-content-xl-center align-items-xl-center flex-xl-row gap-2">
+          <i class="bi bi-tags fs-2"></i>
+          <h5 class="card-title">Tags</h5>
+        </div>
+        <p class="card-text">Total: <span id="tags-count">*</span></p>
+        <%= link_to 'Details', tags_path, class: 'btn btn-warning' %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Widget 4: Ingredients -->
+  <div id="ingredients-widget" class="col-md-3 col-sm-6 dashboard-widget">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="d-flex flex-column flex-xl-row justify-content-xl-center align-items-xl-center flex-xl-row gap-2">
+          <i class="bi bi-box fs-2"></i>
+          <h5 class="card-title">Ingredients</h5>
+        </div>
+        <p class="card-text">Total: <span id="ingredients-count">*</span></p>
+        <%= link_to 'Details', ingredients_path, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row my-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-clock me-2"></i>Latest Recipes</h5>
+        <p class="card-text">Top 5 latest recipes ordered by updated date.</p>
+        <table class="table recipes-table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Recipe Name</th>
+              <th scope="col">Total Steps</th>
+              <th scope="col">Calories</th>
+              <th scope="col">Preparation Duration</th>
+            </tr>
+          </thead>
+          <tbody id="latest-recipes">
+            <tr>
+              <td data-label="Recipe Name">*</td>
+              <td data-label="Total Steps">*</td>
+              <td data-label="Calories">*</td>
+              <td data-label="Preparation Duration">*</td>
+            </tr>
+            <tr>
+              <td data-label="Recipe Name">*</td>
+              <td data-label="Total Steps">*</td>
+              <td data-label="Calories">*</td>
+              <td data-label="Preparation Duration">*</td>
+            </tr>
+            <tr>
+              <td data-label="Recipe Name">*</td>
+              <td data-label="Total Steps">*</td>
+              <td data-label="Calories">*</td>
+              <td data-label="Preparation Duration">*</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row my-4 row-gap-4">
+  <div class="col-md-6">
+    <div class="card bg-info bg-opacity-25">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-tag me-2"></i>Ingredient Tags</h5>
+        <ul class="mt-3 list-group" id="ingredient-tags-list">
+          <!-- List of ingredient tags will be dynamically added here -->
+          <li class="list-group-item"><a href="#">*</a> (* ingredients)</li>
+          <li class="list-group-item"><a href="#">*</a> (* ingredients)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card: Tags with Type 'Recipe' -->
+  <div class="col-md-6">
+    <div class="card bg-warning bg-opacity-25">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-tag-fill me-2"></i>Recipe Tags</h5>
+        <ul class="mt-3 list-group" id="recipe-tags-list">
+          <!-- List of recipe tags will be dynamically added here -->
+          <li class="list-group-item"><a href="#">*</a> (* recipes)</li>
+          <li class="list-group-item"><a href="#">*</a> (* recipes)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card: Top Cuisine Types -->
+  <div class="col-md-6">
+    <div class="card bg-success bg-opacity-25">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-globe me-2"></i>Top Cuisine Types</h5>
+        <ul class="mt-3 list-group" id="top-cuisines-list">
+          <!-- List of cuisines will be dynamically added here -->
+          <li class="list-group-item"><a href="#">*</a> (* recipes)</li>
+          <li class="list-group-item"><a href="#">*</a> (* recipes)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card: Quick Search -->
+  <div class="col-md-6">
+    <div class="card bg-secondary bg-opacity-25">
+      <div class="card-body text-center">
+        <h5 class="card-title">Quick Search</h5>
+        <input type="text" class="form-control" placeholder="Search by recipe, ingredient...">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import Dashboard from 'dashboard'
+  const dashboard = new Dashboard()
+  dashboard.perform()
+</script>

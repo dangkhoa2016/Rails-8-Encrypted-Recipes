@@ -1,0 +1,5 @@
+<% tags.each do |tag| %>
+  <li class="list-group-item">
+    <%= link_to tag.name, tag_path(tag) %> (<%= pluralize(tag.send("#{association}_tags").count, association) %>)
+  </li>
+<% end %>

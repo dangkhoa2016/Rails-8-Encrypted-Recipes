@@ -1,0 +1,5 @@
+<% cuisines.each do |cuisine| %>
+  <li class="list-group-item">
+    <%= link_to cuisine[:name], recipes_path(cuisine: cuisine[:slug]) %> (<%= pluralize(cuisine[:count], 'recipe') %>)
+  </li>
+<% end %>
