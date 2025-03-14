@@ -15,3 +15,60 @@ select[aria-readonly="true"],select[readonly="true"],select[readonly="readonly"]
 .border-top-xl {
   border-top-width: 1rem;
 }
+
+@media (min-width: 450px) and (max-width: 575px) {
+  .dashboard-widget {
+    width: 50% !important;
+  }
+}
+
+/* Basic table styling */
+.recipes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recipes-table th, .recipes-table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Responsive design for screens smaller than 576px */
+@media screen and (max-width: 576px) {
+  .recipes-table th, .recipes-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Hide the table header row */
+  .recipes-table thead {
+    display: none;
+  }
+
+  /* Add pseudo-elements for column headers in each row */
+  .recipes-table tbody tr {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  .recipes-table tbody tr td {
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .recipes-table tbody tr td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+  }
+
+  /* Optional: Adjust the spacing of content */
+  .recipes-table td {
+    padding-left: 10px;
+    padding-top: 5px;
+  }
+}

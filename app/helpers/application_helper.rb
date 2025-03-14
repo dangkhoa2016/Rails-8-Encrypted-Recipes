@@ -2,6 +2,13 @@ module ApplicationHelper
   def nav_list
     [
       {
+        model: :home,
+        icon: "house"
+      },
+      {
+        model: nil # hr
+      },
+      {
         model: :recipe,
         icon: "menu-up"
       },

@@ -1,1 +1,3 @@
 bundle add dotenv-rails --group "development, test"
+
+rails g controller HomeController index

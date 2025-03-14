@@ -22,9 +22,21 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  resources :home, only: [ :index ] do
+    collection do
+      get :top_widgets
+      get :latest_recipes
+      get :ingredient_tags
+      get :recipe_tags
+      get :top_cuisines
+    end
+  end
+
+  resources :homes, path: "/", controller: :home
+
+  root "home#index"
 end

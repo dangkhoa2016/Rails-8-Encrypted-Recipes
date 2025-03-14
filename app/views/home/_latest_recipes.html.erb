@@ -1,0 +1,8 @@
+<% recipes.each do |recipe| %>
+  <tr>
+    <td data-label="Recipe Name"><%= recipe.name %></td>
+    <td data-label="Total Steps"><%= recipe.steps.count %></td>
+    <td data-label="Calories"><%= recipe.calories %></td>
+    <td data-label="Preparation Duration"><%= recipe.prepare_duration.to_duration %></td>
+  </tr>
+<% end %>
