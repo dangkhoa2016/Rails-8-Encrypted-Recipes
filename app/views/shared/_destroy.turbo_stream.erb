@@ -13,6 +13,8 @@
 		icon = 'bi-exclamation-triangle'
 		title = 'Error'
 	end
+
+	redirect_back_url = request.headers['Referer']
 %>
 
 <%= turbo_stream.update modal_frame do %>
@@ -46,10 +48,15 @@
 				}
 			}, 1000);
 
+			var redirectFnFired = false;
 			var redirectFn = function() {
+				if (redirectFnFired)
+					return;
+				
+				redirectFnFired = true;
 				const willRedirect = destroyedMessage.closest('.alert').classList.contains('alert-success');
 				if (willRedirect)
-					Turbo.visit('<%= polymorphic_path(controller_name) %>');
+					Turbo.visit('<%= redirect_back_url.presence || polymorphic_path(controller_name) %>');
 			};
 
 			var timeoutClose = setTimeout(() => {
