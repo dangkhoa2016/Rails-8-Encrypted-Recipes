@@ -65,3 +65,5 @@ end
 gem "schema_to_scaffold", "~> 0.8.0"
 
 gem "dotenv-rails", groups: [ :development, :test ]
+
+gem "devise", "~> 4.9"
