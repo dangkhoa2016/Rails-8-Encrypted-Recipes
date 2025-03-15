@@ -42,4 +42,8 @@ puts "Seeding the database with steps..."
 load 'db/seeds/step.rb'
 puts "Seeded the database with #{Step.count} steps!"
 
+puts "Seeding the database with users..."
+load 'db/seeds/user.rb'
+puts "Seeded the database with #{User.count} users!"
+
 puts "Database has been seeded successfully at #{Time.now}!"
