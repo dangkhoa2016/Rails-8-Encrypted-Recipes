@@ -29,17 +29,15 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  resources :home, only: [ :index ] do
-    collection do
-      get :top_widgets
-      get :latest_recipes
-      get :ingredient_tags
-      get :recipe_tags
-      get :top_cuisines
-    end
-  end
-
-  resources :homes, path: "/", controller: :home
-
   root "home#index"
+
+  # Dashboard widget endpoints
+  scope controller: :home do
+    get "home", action: :index, as: :home_index
+    get "home/top_widgets", action: :top_widgets, as: :home_top_widgets
+    get "home/latest_recipes", action: :latest_recipes, as: :home_latest_recipes
+    get "home/ingredient_tags", action: :ingredient_tags, as: :home_ingredient_tags
+    get "home/recipe_tags", action: :recipe_tags, as: :home_recipe_tags
+    get "home/top_cuisines", action: :top_cuisines, as: :home_top_cuisines
+  end
 end

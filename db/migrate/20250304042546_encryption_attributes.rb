@@ -31,7 +31,7 @@ class EncryptionAttributes < ActiveRecord::Migration[8.0]
     change_column :recipes, :calories, :string
     change_column :recipes, :prepare_duration, :string
     change_column :recipes, :cuisine_type, :string
-    remove_foreign_key :recipes, column: :category_id
+    remove_foreign_key :recipes, column: :category_id, if_exists: true
     change_column :recipes, :category_id, :string, null: false
     # add_index :recipes, :category_id
     add_index :recipes, :name

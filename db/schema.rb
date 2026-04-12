@@ -10,20 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_14_133426) do
+ActiveRecord::Schema[8.1].define(version: 2025_03_14_133426) do
   create_table "categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "name"
     t.string "summary"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "ingredient_recipes", force: :cascade do |t|
+    t.string "amount"
+    t.datetime "created_at", null: false
     t.string "ingredient_id", null: false
     t.string "recipe_id", null: false
-    t.string "amount"
     t.string "unit"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["amount"], name: "index_ingredient_recipes_on_amount"
     t.index ["ingredient_id", "recipe_id"], name: "index_ingredient_recipes_on_ingredient_id_and_recipe_id", unique: true
@@ -33,9 +33,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_133426) do
   end
 
   create_table "ingredient_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "ingredient_id", null: false
     t.string "tag_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ingredient_id", "tag_id"], name: "index_ingredient_tags_on_ingredient_id_and_tag_id", unique: true
     t.index ["ingredient_id"], name: "index_ingredient_tags_on_ingredient_id"
@@ -43,16 +43,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_133426) do
   end
 
   create_table "ingredients", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
     t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name"
     t.datetime "updated_at", null: false
   end
 
   create_table "recipe_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "recipe_id", null: false
     t.string "tag_id", null: false
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipe_id", "tag_id"], name: "index_recipe_tags_on_recipe_id_and_tag_id", unique: true
     t.index ["recipe_id"], name: "index_recipe_tags_on_recipe_id"
@@ -60,14 +60,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_133426) do
   end
 
   create_table "recipes", force: :cascade do |t|
-    t.string "name"
-    t.string "summary"
-    t.string "cuisine_type"
-    t.string "is_vegetarian"
     t.string "calories"
-    t.string "prepare_duration"
     t.string "category_id", null: false
     t.datetime "created_at", null: false
+    t.string "cuisine_type"
+    t.string "is_vegetarian"
+    t.string "name"
+    t.string "prepare_duration"
+    t.string "summary"
     t.datetime "updated_at", null: false
     t.index ["calories"], name: "index_recipes_on_calories"
     t.index ["category_id"], name: "index_recipes_on_category_id"
@@ -78,11 +78,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_133426) do
   end
 
   create_table "steps", force: :cascade do |t|
-    t.string "name"
-    t.string "step_number"
-    t.text "description"
-    t.string "recipe_id", null: false
     t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name"
+    t.string "recipe_id", null: false
+    t.string "step_number"
     t.datetime "updated_at", null: false
     t.index ["description"], name: "index_steps_on_description"
     t.index ["recipe_id"], name: "index_steps_on_recipe_id"
@@ -90,20 +90,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_133426) do
   end
 
   create_table "tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "name"
     t.string "tag_type"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tag_type"], name: "index_tags_on_tag_type"
   end
 
   create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -42,6 +42,6 @@ class TagsTest < ApplicationSystemTestCase
       click_on "Yes"
     end
 
-    assert_text /Tag with Id: \[\d+\] was successfully destroyed/
+    assert_text "Tag (#{@tag.id}) was successfully destroyed"
   end
 end

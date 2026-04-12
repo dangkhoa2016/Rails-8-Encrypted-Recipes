@@ -11,45 +11,112 @@ Rails encryption helps secure data stored in the database without changing how y
 - Encrypt sensitive attributes in the `Recipe` model.
 - Encrypt foreign keys linking to other tables to ensure the security of related data.
 - Utilize Rails 8’s Active Record Encryption feature to automate the encryption and decryption process.
-- Provide a friend to add, update, and query recipes.
+- Provide a UI to add, update, and query recipes.
 - Using Bootstrap 5.3 for styling.
 - Using Capybara and Selenium for integration testing.
 - Using Devise for authentication and authorization.
 
-## Installation
+## Requirements
 
-1. Clone the repository to your machine:
-   ```bash
-   git clone https://github.com/dangkhoa2016/Rails-8-Encrypted-Recipes.git
-   cd Rails-8-Encrypted-Recipes
-   ```
+| Dependency | Version |
+|------------|---------|
+| Ruby       | 3.2.6   |
+| Bundler    | 2.6.x   |
+| Rails      | 8.1.x   |
+| SQLite3    | 3.x     |
 
-2. Install the dependencies:
-   ```bash
-   bundle install
-   ```
+> **Note for system tests:** Chrome or Firefox with a matching ChromeDriver/GeckoDriver must be available. The test suite uses Capybara + Selenium in headless mode.
 
-3. Configure encryption in `config/initializers/active_record_encryption.rb` (as per the Rails guide):
-   ```ruby
-   Rails.application.config.active_record_encryption = {
-     primary_key: Rails.application.credentials.dig(:active_record_encryption, :primary_key),
-     deterministic_key: Rails.application.credentials.dig(:active_record_encryption, :deterministic_key),
-     key_derivation_salt: Rails.application.credentials.dig(:active_record_encryption, :key_derivation_salt)
-   }
-   ```
-   or create the secret .enc and .key pair for each environment (test, development, production) at `config/credentials`
+## Setup
 
-4. Create and migrate the database:
-   ```bash
-   rails db:create
-   rails db:migrate
-   ```
+### 1. Clone the repository
 
-   and optionally seed the database with sample data:
-   ```bash
-   rails db:seed
-   ```
-   please have a look at `db/seeds.rb` to see how the data is encrypted and decrypted.
+```bash
+git clone https://github.com/dangkhoa2016/Rails-8-Encrypted-Recipes.git
+cd Rails-8-Encrypted-Recipes
+```
+
+### 2. Install dependencies
+
+```bash
+bundle install
+```
+
+### 3. Configure encryption keys
+
+Generate encryption keys and store them in the credentials file:
+
+```bash
+bin/rails db:encryption:init   # prints keys — copy the output
+bin/rails credentials:edit     # paste under :active_record_encryption
+```
+
+Expected structure inside the credentials file:
+
+```yaml
+active_record_encryption:
+  primary_key: <generated_value>
+  deterministic_key: <generated_value>
+  key_derivation_salt: <generated_value>
+```
+
+Alternatively, create per-environment credential files at `config/credentials/<env>.yml.enc` with their corresponding `.key` files.
+
+### 4. Create and migrate the database
+
+```bash
+bin/rails db:create db:migrate
+```
+
+Optionally seed the database with sample data:
+
+```bash
+bin/rails db:seed
+```
+
+Refer to `db/seeds.rb` to see how encrypted data is seeded.
+
+### 5. Start the server
+
+```bash
+bin/rails server
+```
+
+## Running Tests
+
+### Unit and controller tests
+
+```bash
+bin/rails test
+```
+
+### System tests (requires Chrome/Firefox headless)
+
+```bash
+bin/rails test:system
+```
+
+### Linting
+
+```bash
+bundle exec rubocop
+```
+
+### Security audit
+
+```bash
+bundle exec brakeman
+```
+
+## Troubleshooting
+
+| Error | Solution |
+|-------|---------|
+| `Bundler::GemNotFound` | Run `bundle install` before any other command. |
+| `ActiveRecord::Encryption::Errors::Decryption` | Ensure the correct encryption keys are set in credentials for the active environment. |
+| Missing `secret_key_base` | Run `bin/rails credentials:edit` to generate a secret key base. |
+| System tests fail with "no browser" | Install ChromeDriver: `sudo apt-get install -y chromium-driver`. |
+| `db/schema.rb` conflicts after migrate | Run `bin/rails db:schema:load` to reset from the schema file. |
 
 ## Data Encryption Configuration
 

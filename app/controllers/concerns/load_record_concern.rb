@@ -19,7 +19,7 @@ module LoadRecordConcern
   def load_record
     return if allowed_actions.exclude?(action_name)
 
-    model_class = controller_name.classify.constantize rescue nil
+    model_class = controller_name.classify.safe_constantize
     return if model_class.blank?
 
     record = model_class.find_by(id: params[:id])

@@ -59,8 +59,11 @@ class Recipe < ApplicationRecord
   end
 
   def is_vegetarian
-    value = super rescue nil
+    value = super
     value == "t" || value == "true"
+  rescue ActiveRecord::Encryption::Errors::Decryption
+    Rails.logger.warn "Recipe #{id}: failed to decrypt is_vegetarian"
+    false
   end
 
   def is_vegetarian=(value)

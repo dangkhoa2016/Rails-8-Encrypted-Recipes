@@ -46,6 +46,6 @@ class StepsTest < ApplicationSystemTestCase
       click_on "Yes"
     end
 
-    assert_text /Step with Id: \[\d+\] was successfully destroyed/
+    assert_text "Step (#{@step.id}) was successfully destroyed"
   end
 end

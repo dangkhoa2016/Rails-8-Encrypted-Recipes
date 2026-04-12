@@ -52,6 +52,6 @@ class RecipesTest < ApplicationSystemTestCase
       click_on "Yes"
     end
 
-    assert_text /Recipe with Id: \[\d+\] was successfully destroyed/
+    assert_text "Recipe (#{@recipe.id}) was successfully destroyed"
   end
 end

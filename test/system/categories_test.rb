@@ -7,12 +7,12 @@ class CategoriesTest < ApplicationSystemTestCase
   end
 
   test "visiting the index" do
-    visit categories_url
+    visit categories_path
     assert_selector "h1", text: "Categories"
   end
 
   test "should create category" do
-    visit categories_url
+    visit categories_path
     click_on "New category", match: :first, class: [ "btn", "btn-primary" ]
     # find_link(class: ['btn', 'btn-primary'], text: 'New category').click
 
@@ -25,7 +25,7 @@ class CategoriesTest < ApplicationSystemTestCase
   end
 
   test "should update Category" do
-    visit category_url(@category)
+    visit category_path(@category)
     click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
 
     fill_in "Name", with: @category.name + " updated"
@@ -37,12 +37,12 @@ class CategoriesTest < ApplicationSystemTestCase
   end
 
   test "should destroy Category" do
-    visit category_url(@category)
+    visit category_path(@category)
     click_on "Destroy", match: :first
     within("div.modal-footer") do
       click_on "Yes"
     end
 
-    assert_text /Category with Id: \[\d+\] was successfully destroyed/
+    assert_text "Category (#{@category.id}) was successfully destroyed"
   end
 end

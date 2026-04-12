@@ -8,7 +8,7 @@ module DeleteConcern
     klass = model_name.classify.constantize
 
     if record.blank?
-      message = "#{klass.model_name.human} with Id: [#{params[:id]}] not found"
+      message = "#{klass.model_name.human} (#{params[:id]}) not found"
       respond_to do |format|
         format.html do
           if turbo_frame_request?
@@ -27,8 +27,8 @@ module DeleteConcern
     begin
       record.destroy!
 
-      tilte = "#{klass.model_name.human} with Id: [#{record.id}]"
-      @success_message = "#{tilte} was successfully destroyed"
+      title = "#{klass.model_name.human} (#{record.id})"
+      @success_message = "#{title} was successfully destroyed"
     rescue => error
       @error_message = error.message
     end

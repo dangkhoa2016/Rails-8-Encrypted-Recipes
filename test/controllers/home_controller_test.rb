@@ -18,7 +18,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch widgets and display counts of categories, recipes, tags, and ingredients using TurboStream" do
-    get top_widgets_home_index_url, as: :turbo_stream
+    get home_top_widgets_url, as: :turbo_stream
     assert_response :success
 
     assert_match '<turbo-stream action="update" target="categories-count">', response.body, "Expected to have a categories count"
@@ -28,7 +28,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch widgets and display counts of categories, recipes, tags, and ingredients using Xhr" do
-    get top_widgets_home_index_url, as: :json
+    get home_top_widgets_url, as: :json
     assert_response :success
 
     assert_match '"categories":', response.body, "Expected to have a categories count"
@@ -38,7 +38,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch latest recipes using TurboStream" do
-    get latest_recipes_home_index_url, as: :turbo_stream
+    get home_latest_recipes_url, as: :turbo_stream
     assert_response :success
 
     assert_match '<turbo-stream action="update" target="latest-recipes">', response.body, "Expected to have the latest recipes"
@@ -49,7 +49,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch latest recipes using Xhr" do
-    get latest_recipes_home_index_url, as: :json
+    get home_latest_recipes_url, as: :json
     assert_response :success
 
     assert_match '"category_id":', response.body, "Expected to have a category ID"
@@ -60,7 +60,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch ingredient_tags list using TurboStream" do
-    get ingredient_tags_home_index_url, as: :turbo_stream
+    get home_ingredient_tags_url, as: :turbo_stream
     assert_response :success
 
     assert_match '<turbo-stream action="update" target="ingredient-tags-list">', response.body, "Expected to have the ingredient tags"
@@ -70,7 +70,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch ingredient_tags list using Xhr" do
-    get ingredient_tags_home_index_url, as: :json
+    get home_ingredient_tags_url, as: :json
     assert_response :success
 
     assert_match '"name":', response.body, "Expected to have a tag name"
@@ -79,7 +79,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch recipe_tags list using TurboStream" do
-    get recipe_tags_home_index_url, as: :turbo_stream
+    get home_recipe_tags_url, as: :turbo_stream
     assert_response :success
 
     assert_match '<turbo-stream action="update" target="recipe-tags-list">', response.body, "Expected to have the recipe tags"
@@ -89,7 +89,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch recipe_tags list using Xhr" do
-    get recipe_tags_home_index_url, as: :json
+    get home_recipe_tags_url, as: :json
     assert_response :success
 
     assert_match '"name":', response.body, "Expected to have a tag name"
@@ -98,7 +98,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch top cuisines list using TurboStream" do
-    get top_cuisines_home_index_url, as: :turbo_stream
+    get home_top_cuisines_url, as: :turbo_stream
     assert_response :success
 
     assert_match '<turbo-stream action="update" target="top-cuisines-list">', response.body, "Expected to have the top cuisines"
@@ -108,7 +108,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fetch top cuisines list using Xhr" do
-    get top_cuisines_home_index_url, as: :json
+    get home_top_cuisines_url, as: :json
     assert_response :success
 
     assert_match '"name":', response.body, "Expected to have a cuisine name"

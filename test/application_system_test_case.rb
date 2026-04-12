@@ -21,4 +21,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     # Remove HSTS to allow testing without SSL
     options.add_argument('--disable-hsts')
   end
+
+  Capybara.server = :puma, { Silent: true }
 end
