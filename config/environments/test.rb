@@ -59,4 +59,6 @@ Rails.application.configure do
 
   # Enable the use of encrypted fixtures.
   config.active_record.encryption.encrypt_fixtures = true
+
+  config.force_ssl = false
 end
