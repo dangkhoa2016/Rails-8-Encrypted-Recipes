@@ -12,10 +12,10 @@ class IngredientsController < ApplicationController
     ingredient_tags = IngredientTag.where(ingredient_id: ids).to_a
     tags = Tag.where(id: ingredient_tags.pluck(:tag_id).uniq).to_a
     @ingredients.each do |ingredient|
-      relation = ingredient_recipes.select { |ir| ir.ingredient_id == ingredient.id }
-      ingredient.virtual_recipes = recipes.select { |r| relation.any? { |ir| ir.recipe_id == r.id } }.sort_by(&:name)
-      relation = ingredient_tags.select { |it| it.ingredient_id == ingredient.id }
-      ingredient.virtual_tags = tags.select { |t| relation.any? { |it| it.tag_id == t.id } }.sort_by(&:name)
+      relation = ingredient_recipes.select { |ingredient_recipe| ingredient_recipe.ingredient_id == ingredient.id }
+      ingredient.virtual_recipes = recipes.select { |recipe| relation.any? { |ingredient_recipe| ingredient_recipe.recipe_id == recipe.id } }.sort_by(&:name)
+      relation = ingredient_tags.select { |ingredient_tag| ingredient_tag.ingredient_id == ingredient.id }
+      ingredient.virtual_tags = tags.select { |tag| relation.any? { |ingredient_tag| ingredient_tag.tag_id == tag.id } }.sort_by(&:name)
     end
   end
 

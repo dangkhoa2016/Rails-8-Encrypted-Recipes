@@ -11,8 +11,8 @@ class TagsController < ApplicationController
     recipe_tags = RecipeTag.where(tag_id: ids).to_a
     recipes = Recipe.where(id: recipe_tags.pluck(:recipe_id).uniq)
     @tags.each do |tag|
-      tag.virtual_recipes = recipes.select { |r| recipe_tags.any? { |rt| rt.recipe_id == r.id && rt.tag_id == tag.id } }
-      tag.virtual_ingredients = ingredients.select { |i| ingredient_tags.any? { |it| it.ingredient_id == i.id && it.tag_id == tag.id } }
+      tag.virtual_recipes = recipes.select { |recipe| recipe_tags.any? { |recipe_tag| recipe_tag.recipe_id == recipe.id && recipe_tag.tag_id == tag.id } }
+      tag.virtual_ingredients = ingredients.select { |ingredient| ingredient_tags.any? { |ingredient_tag| ingredient_tag.ingredient_id == ingredient.id && ingredient_tag.tag_id == tag.id } }
     end
   end
 

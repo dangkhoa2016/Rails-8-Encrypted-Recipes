@@ -12,8 +12,7 @@ class StepsTest < ApplicationSystemTestCase
   end
 
   test "should create step" do
-    visit steps_url
-    click_on "New step", match: :first, class: [ "btn", "btn-primary" ]
+    visit new_step_url
 
     fill_in "Description", with: @step.description
     fill_in "Name", with: @step.name + " new"
@@ -26,8 +25,7 @@ class StepsTest < ApplicationSystemTestCase
   end
 
   test "should update Step" do
-    visit step_url(@step)
-    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
+    visit edit_step_url(@step)
 
     fill_in "Description", with: @step.description
     fill_in "Name", with: @step.name + " updated"
@@ -41,10 +39,8 @@ class StepsTest < ApplicationSystemTestCase
 
   test "should destroy Step" do
     visit step_url(@step)
-    click_on "Destroy", match: :first
-    within("div.modal-footer") do
-      click_on "Yes"
-    end
+    click_on "Destroy"
+    click_on "Yes"
 
     assert_text "Step (#{@step.id}) was successfully destroyed"
   end

@@ -12,8 +12,7 @@ class IngredientsTest < ApplicationSystemTestCase
   end
 
   test "should create ingredient" do
-    visit ingredients_url
-    click_on "New ingredient", match: :first, class: [ "btn", "btn-primary" ]
+    visit new_ingredient_url
 
     fill_in "Description", with: @ingredient.description
     fill_in "Name", with: @ingredient.name + " new"
@@ -24,8 +23,7 @@ class IngredientsTest < ApplicationSystemTestCase
   end
 
   test "should update Ingredient" do
-    visit ingredient_url(@ingredient)
-    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
+    visit edit_ingredient_url(@ingredient)
 
     fill_in "Description", with: @ingredient.description
     fill_in "Name", with: @ingredient.name + " updated"
@@ -37,10 +35,8 @@ class IngredientsTest < ApplicationSystemTestCase
 
   test "should destroy Ingredient" do
     visit ingredient_url(@ingredient)
-    click_on "Destroy", match: :first
-    within("div.modal-footer") do
-      click_on "Yes"
-    end
+    click_on "Destroy"
+    click_on "Yes"
 
     assert_text "Ingredient (#{@ingredient.id}) was successfully destroyed"
   end

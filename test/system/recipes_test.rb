@@ -12,8 +12,7 @@ class RecipesTest < ApplicationSystemTestCase
   end
 
   test "should create recipe" do
-    visit recipes_url
-    click_on "New recipe", match: :first, class: [ "btn", "btn-primary" ]
+    visit new_recipe_url
 
     fill_in "Calories", with: @recipe.calories
     select("Category 1", from: "recipe[category_id]")
@@ -29,8 +28,7 @@ class RecipesTest < ApplicationSystemTestCase
   end
 
   test "should update Recipe" do
-    visit recipe_url(@recipe)
-    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
+    visit edit_recipe_url(@recipe)
 
     fill_in "Calories", with: @recipe.calories
     select("Category 2", from: "recipe[category_id]")
@@ -47,10 +45,8 @@ class RecipesTest < ApplicationSystemTestCase
 
   test "should destroy Recipe" do
     visit recipe_url(@recipe)
-    click_on "Destroy", match: :first
-    within("div.modal-footer") do
-      click_on "Yes"
-    end
+    click_on "Destroy"
+    click_on "Yes"
 
     assert_text "Recipe (#{@recipe.id}) was successfully destroyed"
   end

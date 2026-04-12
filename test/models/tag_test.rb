@@ -30,6 +30,18 @@ class TagTest < ActiveSupport::TestCase
     assert_respond_to @tag, :recipes
   end
 
+  test "ingredient tag: ingredients through association returns correct records" do
+    tag = tags(:one)
+    ingredient = ingredients(:one)
+    assert_includes tag.ingredients, ingredient
+  end
+
+  test "recipe tag: recipes through association returns correct records" do
+    tag = tags(:two)
+    recipe = recipes(:two)
+    assert_includes tag.recipes, recipe
+  end
+
   test "should return the total records" do
     assert_equal 2, Tag.count
   end

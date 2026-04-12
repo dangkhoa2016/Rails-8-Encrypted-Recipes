@@ -26,6 +26,18 @@ class RecipeTest < ActiveSupport::TestCase
     assert_respond_to @recipe, :ingredients
   end
 
+  test "ingredients through association returns correct records" do
+    recipe = recipes(:one)
+    ingredient = ingredients(:one)
+    assert_includes recipe.ingredients, ingredient
+  end
+
+  test "tags through association returns correct records" do
+    recipe = recipes(:one)
+    tag = tags(:one)
+    assert_includes recipe.tags, tag
+  end
+
   test "should belong to category" do
     assert_respond_to @recipe, :category
   end

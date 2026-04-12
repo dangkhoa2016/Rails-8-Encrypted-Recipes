@@ -12,8 +12,7 @@ class IngredientRecipesTest < ApplicationSystemTestCase
   end
 
   test "should create ingredient recipe" do
-    visit ingredient_recipes_url
-    click_on "New ingredient recipe", match: :first, class: [ "btn", "btn-primary" ]
+    visit new_ingredient_recipe_url
 
     fill_in "Amount", with: @ingredient_recipe.amount
     select("Ingredient 2", from: "ingredient_recipe[ingredient_id]")
@@ -26,8 +25,7 @@ class IngredientRecipesTest < ApplicationSystemTestCase
   end
 
   test "should update Ingredient recipe" do
-    visit ingredient_recipe_url(@ingredient_recipe)
-    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
+    visit edit_ingredient_recipe_url(@ingredient_recipe)
 
     fill_in "Amount", with: @ingredient_recipe.amount
     select("Ingredient 2", from: "ingredient_recipe[ingredient_id]")
@@ -41,10 +39,8 @@ class IngredientRecipesTest < ApplicationSystemTestCase
 
   test "should destroy Ingredient recipe" do
     visit ingredient_recipe_url(@ingredient_recipe)
-    click_on "Destroy", match: :first
-    within("div.modal-footer") do
-      click_on "Yes"
-    end
+    click_on "Destroy"
+    click_on "Yes"
 
     assert_text "Ingredient recipe (#{@ingredient_recipe.id}) was successfully destroyed"
   end

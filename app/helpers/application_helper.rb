@@ -56,4 +56,15 @@ module ApplicationHelper
       confirm_yes: "Yes", modal_title: "Please Confirm"
     }
   end
+
+  def get_nav_url(model)
+    if model.to_s.downcase == "home"
+      root_path
+    else
+      polymorphic_path(model.to_s.pluralize.underscore)
+    end
+  rescue ActionController::UrlGenerationError
+    '#'
+  end
+
 end

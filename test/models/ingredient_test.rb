@@ -30,6 +30,18 @@ class IngredientTest < ActiveSupport::TestCase
     assert_respond_to @ingredient, :recipes
   end
 
+  test "recipes through association returns correct records" do
+    ingredient = ingredients(:one)
+    recipe = recipes(:one)
+    assert_includes ingredient.recipes, recipe
+  end
+
+  test "tags through association returns correct records" do
+    ingredient = ingredients(:one)
+    tag = tags(:one)
+    assert_includes ingredient.tags, tag
+  end
+
   test "should return the total records" do
     assert_equal 2, Ingredient.count
   end

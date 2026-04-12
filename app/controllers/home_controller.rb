@@ -1,109 +1,67 @@
 class HomeController < ApplicationController
+  before_action :dashboard_service
+
   def index
   end
 
   def top_widgets
+    data = @dashboard_service.top_widgets
     respond_to do |format|
-      format.json do
-        render json: {
-          categories: Category.count,
-          recipes: Recipe.count,
-          ingredients: Ingredient.count,
-          tags: Tag.count
-        }
-      end
-
-      format.html do
-        render_turbo_stream_top_widgets
-      end
-
-      format.turbo_stream do
-        render_turbo_stream_top_widgets
-      end
+      format.json { render json: data }
+      format.html { render_turbo_stream_top_widgets(data) }
+      format.turbo_stream { render_turbo_stream_top_widgets(data) }
     end
   end
 
   def latest_recipes
-    data = Recipe.includes(:steps).order("created_at DESC").limit(5)
+    data = @dashboard_service.latest_recipes
     respond_to do |format|
-      format.json do
-        render json: data
-      end
-
-      format.html do
-        render_turbo_stream_latest_recipes(data)
-      end
-
-      format.turbo_stream do
-        render_turbo_stream_latest_recipes(data)
-      end
+      format.json { render json: data }
+      format.html { render_turbo_stream_latest_recipes(data) }
+      format.turbo_stream { render_turbo_stream_latest_recipes(data) }
     end
   end
 
   def ingredient_tags
-    data = Tag.ingredient_tags_with_count
-
+    data = @dashboard_service.ingredient_tags
     respond_to do |format|
-      format.json do
-        render json: data
-      end
-
-      format.html do
-        render_turbo_stream_tags_list(data, "ingredient")
-      end
-
-      format.turbo_stream do
-        render_turbo_stream_tags_list(data, "ingredient")
-      end
+      format.json { render json: data }
+      format.html { render_turbo_stream_tags_list(data, "ingredient") }
+      format.turbo_stream { render_turbo_stream_tags_list(data, "ingredient") }
     end
   end
 
   def recipe_tags
-    data = Tag.recipe_tags_with_count
-
+    data = @dashboard_service.recipe_tags
     respond_to do |format|
-      format.json do
-        render json: data
-      end
-
-      format.html do
-        render_turbo_stream_tags_list(data, "recipe")
-      end
-
-      format.turbo_stream do
-        render_turbo_stream_tags_list(data, "recipe")
-      end
+      format.json { render json: data }
+      format.html { render_turbo_stream_tags_list(data, "recipe") }
+      format.turbo_stream { render_turbo_stream_tags_list(data, "recipe") }
     end
   end
 
   def top_cuisines
-    arr = Recipe.where.not(cuisine_type: nil).group(:cuisine_type).count.sort_by { |_k, v| v }.reverse
-    data = arr.map { |k, v| { name: k.titleize, count: v, slug: k } }
-
+    data = @dashboard_service.top_cuisines
     respond_to do |format|
-      format.json do
-        render json: data
-      end
-
-      format.html do
-        render_turbo_stream_top_cuisines(data)
-      end
-
-      format.turbo_stream do
-        render_turbo_stream_top_cuisines(data)
-      end
+      format.json { render json: data }
+      format.html { render_turbo_stream_top_cuisines(data) }
+      format.turbo_stream { render_turbo_stream_top_cuisines(data) }
     end
   end
 
   private
 
-  def render_turbo_stream_top_widgets
+  def dashboard_service
+    @dashboard_service ||= DashboardService.new
+  end
+
+  def render_turbo_stream_top_widgets(data)
     response.content_type = "text/vnd.turbo-stream.html"
     render turbo_stream: [
-      turbo_stream.update("categories-count", body: Category.count),
-      turbo_stream.update("recipes-count", body: Recipe.count),
-      turbo_stream.update("ingredients-count", body: Ingredient.count),
-      turbo_stream.update("tags-count", body: Tag.count)
+      turbo_stream.update("categories-count", body: data[:categories]),
+      turbo_stream.update("recipes-count",     body: data[:recipes]),
+      turbo_stream.update("ingredients-count", body: data[:ingredients]),
+      turbo_stream.update("tags-count",        body: data[:tags])
     ],
     status: :ok,
     layout: false

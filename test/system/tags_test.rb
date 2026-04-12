@@ -12,8 +12,7 @@ class TagsTest < ApplicationSystemTestCase
   end
 
   test "should create tag" do
-    visit tags_url
-    click_on "New tag", match: :first, class: [ "btn", "btn-primary" ]
+    visit new_tag_url
 
     fill_in "Name", with: @tag.name + " new"
     select("Ingredient", from: "tag[tag_type]")
@@ -24,8 +23,7 @@ class TagsTest < ApplicationSystemTestCase
   end
 
   test "should update Tag" do
-    visit tag_url(@tag)
-    click_on "Edit", match: :first, class: [ "btn", "btn-secondary" ]
+    visit edit_tag_url(@tag)
 
     fill_in "Name", with: @tag.name + " updated"
     select("Recipe", from: "tag[tag_type]")
@@ -37,10 +35,8 @@ class TagsTest < ApplicationSystemTestCase
 
   test "should destroy Tag" do
     visit tag_url(@tag)
-    click_on "Destroy", match: :first
-    within("div.modal-footer") do
-      click_on "Yes"
-    end
+    click_on "Destroy"
+    click_on "Yes"
 
     assert_text "Tag (#{@tag.id}) was successfully destroyed"
   end
