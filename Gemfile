@@ -1,74 +1,74 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Use Rails 8.1 as the stable foundation
-gem 'rails', '~> 8.1', '>= 8.1.3'
+gem "rails", "~> 8.1", ">= 8.1.3"
 
 # Modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem 'propshaft', '~> 1.3', '>= 1.3.1'
+gem "propshaft", "~> 1.3", ">= 1.3.1"
 
 # Use sqlite3 as the database for Active Record (v2.5+ optimized for Rails 8) [https://github.com/sparklemotion/sqlite3-ruby]
-gem 'sqlite3', '~> 2.9', '>= 2.9.2'
+gem "sqlite3", "~> 2.9", ">= 2.9.2"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 8.0'
+gem "puma", "~> 8.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails', '~> 2.2', '>= 2.2.3'
+gem "importmap-rails", "~> 2.2", ">= 2.2.3"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem 'turbo-rails', '~> 2.0', '>= 2.0.23'
+gem "turbo-rails", "~> 2.0", ">= 2.0.23"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem 'stimulus-rails', '~> 1.3', '>= 1.3.4'
+gem "stimulus-rails", "~> 1.3", ">= 1.3.4"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder', '~> 2.14', '>= 2.14.1'
+gem "jbuilder", "~> 2.14", ">= 2.14.1"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 # These allow running full applications without Redis
-gem 'solid_cache'
-gem 'solid_queue'
-gem 'solid_cable'
+gem "solid_cache"
+gem "solid_queue"
+gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '~> 1.23', require: false
+gem "bootsnap", "~> 1.23", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem 'kamal', '~> 2.11', require: false
+gem "kamal", "~> 2.11", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-gem 'thruster', '~> 0.1.20', require: false
+gem "thruster", "~> 0.1.20", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem 'brakeman', '~> 8.0', '>= 8.0.4', require: false
+  gem "brakeman", "~> 8.0", ">= 8.0.4", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'rubocop-rails-omakase', '~> 1.1', require: false
-  
+  gem "rubocop-rails-omakase", "~> 1.1", require: false
+
   # Load environment variables from .env files
-  gem 'dotenv-rails', '~> 3.2'
+  gem "dotenv-rails", "~> 3.2"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem 'web-console', '~> 4.3'
+  gem "web-console", "~> 4.3"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'capybara', '~> 3.40'
-  gem 'selenium-webdriver', '~> 4.43'
+  gem "capybara", "~> 3.40"
+  gem "selenium-webdriver", "~> 4.43"
 end
 
 # Generate scaffolds directly from your database schema
-gem 'schema_to_scaffold', git: 'https://github.com/dangkhoa2016/schema_to_scaffold.git', branch: 'master'
+gem "schema_to_scaffold", git: "https://github.com/dangkhoa2016/schema_to_scaffold.git", branch: "master"
 
 # Flexible authentication solution for Rails
-gem 'devise', '~> 5.0', '>= 5.0.3'
+gem "devise", "~> 5.0", ">= 5.0.3"

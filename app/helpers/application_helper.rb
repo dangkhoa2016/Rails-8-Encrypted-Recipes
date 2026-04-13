@@ -64,7 +64,6 @@ module ApplicationHelper
       polymorphic_path(model.to_s.pluralize.underscore)
     end
   rescue ActionController::UrlGenerationError
-    '#'
+    "#"
   end
-
 end
