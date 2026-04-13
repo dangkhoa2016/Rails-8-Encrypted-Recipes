@@ -5,7 +5,7 @@
 [![CI](https://github.com/dangkhoa2016/Rails-8-Encrypted-Recipes/actions/workflows/ci.yml/badge.svg)](https://github.com/dangkhoa2016/Rails-8-Encrypted-Recipes/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-English | [Tiếng Việt](README.vi.md)
+> 🌐 Language / Ngôn ngữ: **English** | [Tiếng Việt](README.vi.md)
 
 Rails 8 Encrypted Recipes is a demo CRUD application that shows how to use Active Record Encryption in a real Rails app, including deterministic encryption for searchable fields and encrypted foreign keys in join tables.
 
