@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1", ">= 8.1.3"
 
 # Modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft", "~> 1.3", ">= 1.3.1"
+gem "propshaft", "~> 1.3"
 
 # Use sqlite3 as the database for Active Record (v2.5+ optimized for Rails 8) [https://github.com/sparklemotion/sqlite3-ruby]
 gem "sqlite3", "~> 2.9", ">= 2.9.2"
