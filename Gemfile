@@ -7,7 +7,7 @@ gem "rails", "~> 8.1", ">= 8.1.3"
 gem "propshaft", "~> 1.3"
 
 # Use sqlite3 as the database for Active Record (v2.5+ optimized for Rails 8) [https://github.com/sparklemotion/sqlite3-ruby]
-gem "sqlite3", "~> 2.9", ">= 2.9.2"
+gem "sqlite3", "~> 2.9"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 8.0"
