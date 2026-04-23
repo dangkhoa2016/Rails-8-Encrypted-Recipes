@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dangkhoa2016/schema_to_scaffold.git
-  revision: 9b25044b72d2d530fa1b198613e42a9617047bd0
+  revision: 1d620127db9c3ef83d247727d2728006fc095ddf
   branch: master
   specs:
     schema_to_scaffold (0.8.3)
@@ -174,7 +174,7 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     mini_mime (1.1.5)
-    minitest (6.0.4)
+    minitest (6.0.5)
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
