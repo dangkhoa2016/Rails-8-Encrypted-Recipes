@@ -71,4 +71,4 @@ end
 gem "schema_to_scaffold", git: "https://github.com/dangkhoa2016/schema_to_scaffold.git", branch: "master"
 
 # Flexible authentication solution for Rails
-gem "devise", "~> 5.0", ">= 5.0.3"
+gem "devise", "~> 5.0"
