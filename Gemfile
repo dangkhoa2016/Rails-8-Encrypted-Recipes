@@ -64,7 +64,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.40"
-  gem "selenium-webdriver", "~> 4.43"
+  gem "selenium-webdriver", "~> 4.44"
 end
 
 # Generate scaffolds directly from your database schema
