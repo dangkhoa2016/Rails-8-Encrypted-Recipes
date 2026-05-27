@@ -22,7 +22,7 @@ gem "turbo-rails", "~> 2.0", ">= 2.0.23"
 gem "stimulus-rails", "~> 1.3", ">= 1.3.4"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder", "~> 2.14", ">= 2.14.1"
+gem "jbuilder", "~> 2.15"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
